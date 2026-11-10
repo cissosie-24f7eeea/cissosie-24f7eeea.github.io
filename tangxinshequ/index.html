@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>糖心社区 - 兴趣内容聚合与话题广场</title>
+<meta name="description" content="糖心社区汇聚兴趣话题、经验问答与图文分享，涵盖手工创作、城市漫游、居家料理、宠物日常、读书观影等方向，适合寻找同好讨论与实用攻略的浏览者。">
+<meta name="keywords" content="兴趣话题广场,经验问答,图文分享,同好讨论,生活攻略">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4c6.6 0 12 5.4 12 12s-5.4 12-12 12S4 22.6 4 16 9.4 4 16 4z' fill='%23e05c7a'/%3E%3Cpath d='M16 9c1.6 3.2 4.2 5.8 7.4 7.4-3.2 1.6-5.8 4.2-7.4 7.4-1.6-3.2-4.2-5.8-7.4-7.4C11.8 14.8 14.4 12.2 16 9z' fill='%23fff3f5'/%3E%3C/svg%3E">
+<style>
+:root{
+  --rose:#d9556f;
+  --rose-deep:#a83752;
+  --rose-soft:#fbe6ea;
+  --amber:#e8a33d;
+  --amber-soft:#fdf0dc;
+  --teal:#3c8c86;
+  --teal-soft:#e0f0ee;
+  --ink:#2b2226;
+  --ink-2:#5a4d52;
+  --ink-3:#8b7d82;
+  --line:#eadfe2;
+  --bg:#fffafb;
+  --panel:#ffffff;
+  --panel-2:#fdf6f7;
+  --radius-s:6px;
+  --radius-m:10px;
+  --radius-l:16px;
+  --shadow-s:0 1px 2px rgba(80,40,50,.06);
+  --shadow-m:0 4px 14px rgba(80,40,50,.08);
+  --shadow-l:0 10px 30px rgba(80,40,50,.10);
+  --sticky-h:104px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.7;
+  font-size:15px;
+}
+h1,h2,h3,h4{margin:0;line-height:1.35;color:var(--ink);}
+p{margin:0 0 12px;}
+a{color:var(--rose-deep);text-decoration:none;}
+a:hover{text-decoration:underline;}
+ul,ol{margin:0 0 12px;padding-left:20px;}
+li{margin-bottom:6px;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+:focus-visible{outline:2px solid var(--rose);outline-offset:2px;}
+
+/* ============ 吸顶区 ============ */
+.sticky-wrap{
+  position:sticky;top:0;z-index:60;
+  box-shadow:var(--shadow-m);
+}
+.notice-bar{
+  background:linear-gradient(90deg,var(--rose-deep),var(--rose));
+  color:#fff;
+  font-size:13.5px;
+  letter-spacing:.2px;
+}
+.notice-bar .inner{
+  max-width:1360px;margin:0 auto;padding:8px 24px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.notice-bar b{font-weight:600;}
+.notice-bar .dot{
+  width:7px;height:7px;border-radius:50%;background:#ffe0a3;flex:none;
+  box-shadow:0 0 0 3px rgba(255,224,163,.3);
+}
+.notice-bar span{opacity:.95;}
+.site-header{
+  background:rgba(255,250,251,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1360px;margin:0 auto;padding:10px 24px;
+  display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:10px;flex:none;}
+.brand svg{width:36px;height:36px;flex:none;}
+.brand-text{font-size:21px;font-weight:800;letter-spacing:.5px;color:var(--rose-deep);}
+.main-nav{display:flex;gap:4px;flex-wrap:wrap;flex:1;min-width:0;}
+.main-nav a{
+  font-size:14px;color:var(--ink-2);padding:6px 10px;border-radius:var(--radius-s);
+  white-space:nowrap;
+}
+.main-nav a:hover{background:var(--rose-soft);color:var(--rose-deep);text-decoration:none;}
+.header-tools{display:flex;gap:8px;align-items:center;flex:none;}
+.search-box{
+  display:flex;align-items:center;gap:6px;background:var(--panel-2);
+  border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 12px;
+}
+.search-box input{
+  border:0;background:transparent;outline:none;font-size:13.5px;width:150px;color:var(--ink);
+  padding:4px 0;
+}
+.search-box button{
+  border:0;background:var(--rose);color:#fff;border-radius:999px;
+  padding:5px 14px;font-size:13px;cursor:pointer;
+}
+.search-box button:hover{background:var(--rose-deep);}
+.btn-ghost{
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);
+  padding:6px 14px;border-radius:999px;font-size:13.5px;cursor:pointer;
+}
+.btn-ghost:hover{border-color:var(--rose);color:var(--rose-deep);}
+
+/* ============ 布局骨架 ============ */
+.layout{
+  max-width:1360px;margin:0 auto;padding:0 24px;
+  display:grid;
+  grid-template-columns:200px minmax(0,1fr) 280px;
+  gap:28px;
+  align-items:start;
+}
+section[id],div[id]{scroll-margin-top:calc(var(--sticky-h) + 16px);}
+@media(max-width:1080px){
+  .layout{grid-template-columns:minmax(0,1fr) 280px;}
+  .col-left{display:none;}
+  .mobile-channels{display:flex;}
+}
+@media(max-width:820px){
+  .layout{grid-template-columns:minmax(0,1fr);}
+  .col-right{order:3;}
+  .col-main{order:2;}
+  .mobile-channels{order:1;display:flex;}
+}
+
+/* ============ 首屏 ============ */
+.hero{
+  grid-column:1/-1;
+  margin:24px 0 4px;
+  background:
+    radial-gradient(1200px 320px at 85% -10%,rgba(232,163,61,.14),transparent 60%),
+    radial-gradient(900px 300px at 5% 110%,rgba(60,140,134,.12),transparent 60%),
+    linear-gradient(135deg,#fff6f7,#fdf3ec 55%,#f2faf8);
+  border:1px solid var(--line);
+  border-radius:var(--radius-l);
+  padding:36px 40px;
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);
+  gap:32px;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;
+  border-radius:50%;border:26px solid rgba(217,85,111,.06);
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--rose-deep);
+  background:#fff;border:1px solid #f3d6dc;padding:4px 12px;border-radius:999px;
+  font-weight:600;letter-spacing:.4px;
+}
+.hero h1{
+  font-size:clamp(30px,4vw,44px);
+  letter-spacing:1px;
+  margin:14px 0 12px;
+  color:var(--rose-deep);
+}
+.hero-lead{font-size:15.5px;color:var(--ink-2);max-width:600px;margin-bottom:20px;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-primary{
+  display:inline-block;background:var(--rose);color:#fff;padding:10px 22px;
+  border-radius:999px;font-size:14.5px;font-weight:600;box-shadow:var(--shadow-s);
+}
+.btn-primary:hover{background:var(--rose-deep);text-decoration:none;}
+.btn-secondary{
+  display:inline-block;background:#fff;border:1px solid var(--line);color:var(--ink-2);
+  padding:10px 22px;border-radius:999px;font-size:14.5px;
+}
+.btn-secondary:hover{border-color:var(--rose);color:var(--rose-deep);text-decoration:none;}
+.hero-visual{position:relative;min-height:220px;}
+.hero-visual svg{width:100%;height:auto;}
+.hero-stats{
+  display:flex;gap:18px;margin-top:18px;flex-wrap:wrap;
+}
+.hero-stats div{font-size:13px;color:var(--ink-3);}
+.hero-stats strong{display:block;font-size:20px;color:var(--rose-deep);font-weight:800;}
+
+/* ============ 左频道栏 ============ */
+.col-left{
+  position:sticky;top:calc(var(--sticky-h) + 16px);
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);
+  padding:16px 14px;box-shadow:var(--shadow-s);
+}
+.channel-title{
+  font-size:12.5px;letter-spacing:1px;color:var(--ink-3);font-weight:700;
+  text-transform:uppercase;margin-bottom:10px;padding-left:6px;
+}
+.channel-list{list-style:none;margin:0;padding:0;}
+.channel-list li{margin:0;}
+.channel-list a{
+  display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--radius-s);
+  font-size:14px;color:var(--ink-2);
+}
+.channel-list a:hover{background:var(--rose-soft);color:var(--rose-deep);text-decoration:none;}
+.channel-list .ico{
+  width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none;
+}
+.mobile-channels{
+  display:none;gap:8px;flex-wrap:wrap;margin:18px 0 0;
+}
+.mobile-channels a{
+  font-size:13px;padding:5px 12px;border-radius:999px;background:#fff;
+  border:1px solid var(--line);color:var(--ink-2);
+}
+.mobile-channels a:hover{border-color:var(--rose);color:var(--rose-deep);text-decoration:none;}
+
+/* ============ 主内容 ============ */
+.col-main{min-width:0;padding-bottom:20px;}
+.block{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-l);
+  padding:26px 28px;margin-bottom:24px;box-shadow:var(--shadow-s);
+}
+.block-head{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:14px;
+  border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px;flex-wrap:wrap;
+}
+.block-head h2{
+  font-size:20px;letter-spacing:.5px;position:relative;padding-left:14px;
+}
+.block-head h2::before{
+  content:"";position:absolute;left:0;top:4px;bottom:4px;width:4px;
+  border-radius:2px;background:linear-gradient(var(--rose),var(--amber));
+}
+.block-head .sub{font-size:13px;color:var(--ink-3);}
+.block-head a.more{font-size:13px;color:var(--rose-deep);white-space:nowrap;}
+
+/* 概览 */
+.overview p{color:var(--ink-2);font-size:14.5px;}
+.overview strong{color:var(--rose-deep);}
+
+/* 精选卡片 */
+.card-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;
+}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;
+  background:#fff;display:flex;flex-direction:column;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-m);}
+.card img{width:100%;height:150px;object-fit:cover;}
+.card-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.card h3{font-size:15.5px;letter-spacing:.2px;}
+.card h3 a{color:var(--ink);}
+.card h3 a:hover{color:var(--rose-deep);text-decoration:none;}
+.card .desc{font-size:13px;color:var(--ink-2);line-height:1.65;flex:1;}
+.tag-row{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{
+  font-size:11.5px;padding:2px 8px;border-radius:999px;background:var(--rose-soft);
+  color:var(--rose-deep);white-space:nowrap;
+}
+.tag.amber{background:var(--amber-soft);color:#a86f13;}
+.tag.teal{background:var(--teal-soft);color:#2c6b66;}
+.card-meta{
+  display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);
+  border-top:1px dashed var(--line);padding-top:8px;
+}
+.card-meta b{color:var(--rose);font-weight:700;}
+
+/* 动态列表 */
+.updates{list-style:none;margin:0;padding:0;}
+.updates li{
+  display:flex;gap:14px;padding:11px 0;border-bottom:1px dashed var(--line);
+  align-items:flex-start;margin:0;
+}
+.updates li:last-child{border-bottom:0;}
+.updates .time{
+  flex:none;width:88px;font-size:12.5px;color:var(--ink-3);padding-top:2px;
+}
+.updates .utitle{font-size:14.5px;font-weight:600;color:var(--ink);}
+.updates .utitle a{color:inherit;}
+.updates .utitle a:hover{color:var(--rose-deep);text-decoration:none;}
+.updates .usum{font-size:13px;color:var(--ink-2);}
+.badge-new{
+  display:inline-block;font-size:11px;background:var(--rose);color:#fff;
+  border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:1px;
+}
+.badge-type{
+  display:inline-block;font-size:11px;background:var(--panel-2);color:var(--ink-3);
+  border:1px solid var(--line);border-radius:4px;padding:0 6px;margin-right:6px;
+}
+
+/* 分类入口 */
+.cat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;
+}
+.cat-item{
+  border:1px solid var(--line);border-radius:var(--radius-m);padding:14px 14px 12px;
+  background:var(--panel-2);display:flex;flex-direction:column;gap:4px;
+}
+.cat-item:hover{border-color:var(--rose);background:#fff;text-decoration:none;}
+.cat-item .cn{font-size:15px;font-weight:700;color:var(--rose-deep);}
+.cat-item .cd{font-size:12.5px;color:var(--ink-3);}
+
+/* 深度解析 */
+.article-body{font-size:15px;color:var(--ink-2);}
+.article-body h3{
+  font-size:17px;margin:22px 0 10px;color:var(--ink);padding-left:10px;
+  border-left:3px solid var(--amber);
+}
+.article-body h3:first-child{margin-top:0;}
+.article-body ul{padding-left:22px;}
+.article-body li{font-size:14.5px;}
+.article-body strong{color:var(--rose-deep);}
+.callout{
+  background:var(--amber-soft);border-left:3px solid var(--amber);
+  border-radius:0 var(--radius-s) var(--radius-s) 0;padding:12px 16px;
+  font-size:14px;color:#7a5410;margin:16px 0;
+}
+
+/* 体验路径：编号步骤 */
+.steps{list-style:none;margin:0;padding:0;counter-reset:step;}
+.steps li{
+  position:relative;padding:0 0 18px 46px;counter-increment:step;
+  margin:0;border-left:2px dashed var(--line);
+}
+.steps li:last-child{border-left-color:transparent;padding-bottom:0;}
+.steps li::before{
+  content:counter(step);position:absolute;left:-17px;top:0;width:32px;height:32px;
+  border-radius:50%;background:var(--rose);color:#fff;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.steps h3{font-size:15.5px;margin-bottom:4px;}
+.steps p{font-size:13.8px;color:var(--ink-2);margin:0;}
+
+/* FAQ */
+.faq details{
+  border:1px solid var(--line);border-radius:var(--radius-m);padding:0 16px;
+  margin-bottom:10px;background:#fff;
+}
+.faq details[open]{border-color:#f0cdd5;background:var(--panel-2);}
+.faq summary{
+  cursor:pointer;padding:13px 0;font-size:14.5px;font-weight:600;color:var(--ink);
+  list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{
+  content:"+";font-size:18px;color:var(--rose);font-weight:400;flex:none;
+}
+.faq details[open] summary::after{content:"−";}
+.faq .answer{padding:0 0 14px;font-size:14px;color:var(--ink-2);}
+
+/* 评论 */
+.comments{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.comment{
+  border:1px solid var(--line);border-radius:var(--radius-m);padding:12px 14px;
+  background:#fff;
+}
+.comment .chead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.comment .nick{font-size:13.5px;font-weight:700;color:var(--teal);}
+.comment .cdate{font-size:11.5px;color:var(--ink-3);}
+.comment p{font-size:13.5px;color:var(--ink-2);margin:0;}
+
+/* 资讯 */
+.news-list{list-style:none;margin:0;padding:0;}
+.news-list li{
+  display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line);margin:0;
+}
+.news-list li:last-child{border-bottom:0;padding-bottom:0;}
+.news-list img{
+  width:120px;height:80px;object-fit:cover;border-radius:var(--radius-s);flex:none;
+}
+.news-list .nbody{min-width:0;}
+.news-list .ndate{font-size:12px;color:var(--ink-3);margin-bottom:3px;}
+.news-list h3{font-size:15px;margin-bottom:4px;}
+.news-list h3 a{color:var(--ink);}
+.news-list h3 a:hover{color:var(--rose-deep);text-decoration:none;}
+.news-list p{font-size:13px;color:var(--ink-2);margin:0;}
+
+/* 相关推荐 标签索引 */
+.reco-tags{display:flex;gap:10px;flex-wrap:wrap;}
+.reco-tags a{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--line);border-radius:999px;padding:7px 16px;
+  font-size:13.5px;color:var(--ink-2);background:#fff;
+}
+.reco-tags a:hover{border-color:var(--rose);color:var(--rose-deep);background:var(--rose-soft);text-decoration:none;}
+.reco-tags .n{font-size:11.5px;color:var(--ink-3);}
+
+/* 榜单 */
+.rank-list{list-style:none;margin:0;padding:0;counter-reset:rank;}
+.rank-list li{
+  display:flex;gap:14px;align-items:center;padding:10px 0;
+  border-bottom:1px dashed var(--line);margin:0;
+}
+.rank-list li:last-child{border-bottom:0;}
+.rank-list .rk{
+  flex:none;width:24px;height:24px;border-radius:6px;background:var(--panel-2);
+  color:var(--ink-3);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.rank-list li:nth-child(1) .rk{background:var(--rose);color:#fff;}
+.rank-list li:nth-child(2) .rk{background:var(--amber);color:#fff;}
+.rank-list li:nth-child(3) .rk{background:var(--teal);color:#fff;}
+.rank-list .rtitle{font-size:14.5px;font-weight:600;flex:1;min-width:0;}
+.rank-list .rtitle a{color:var(--ink);}
+.rank-list .rtitle a:hover{color:var(--rose-deep);text-decoration:none;}
+.rank-list .rstat{font-size:12.5px;color:var(--ink-3);flex:none;}
+
+/* ============ 右辅助栏 ============ */
+.col-right{
+  position:sticky;top:calc(var(--sticky-h) + 16px);
+  display:flex;flex-direction:column;gap:18px;
+}
+.side-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-m);
+  padding:16px 16px 14px;box-shadow:var(--shadow-s);
+}
+.side-card h3{
+  font-size:15px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:6px;
+}
+.side-card h3 .dot{width:6px;height:6px;border-radius:50%;background:var(--rose);}
+.side-list{list-style:none;margin:0;padding:0;}
+.side-list li{
+  display:flex;gap:8px;padding:7px 0;font-size:13.5px;margin:0;align-items:baseline;
+}
+.side-list .idx{
+  flex:none;font-size:12px;font-weight:700;color:var(--rose);width:16px;
+}
+.side-list a{color:var(--ink-2);}
+.side-list a:hover{color:var(--rose-deep);}
+.side-list .hot{font-size:11.5px;color:var(--ink-3);margin-left:auto;flex:none;}
+.side-note{font-size:12.5px;color:var(--ink-3);margin-top:10px;line-height:1.6;}
+.topic-cloud{display:flex;flex-wrap:wrap;gap:8px;}
+.topic-cloud a{
+  font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--panel-2);
+  color:var(--ink-2);border:1px solid var(--line);
+}
+.topic-cloud a:hover{background:var(--rose-soft);color:var(--rose-deep);border-color:#f0cdd5;text-decoration:none;}
+.update-stream{list-style:none;margin:0;padding:0;}
+.update-stream li{padding:8px 0;border-bottom:1px dashed var(--line);margin:0;}
+.update-stream li:last-child{border-bottom:0;padding-bottom:0;}
+.update-stream .st{font-size:11.5px;color:var(--ink-3);}
+.update-stream .sn{font-size:13.5px;color:var(--ink-2);}
+.update-stream .sn a{color:inherit;}
+.update-stream .sn a:hover{color:var(--rose-deep);text-decoration:none;}
+
+/* ============ 页尾 ============ */
+.site-footer{
+  margin-top:36px;background:linear-gradient(180deg,#fff6f7,#fdf3ec);
+  border-top:1px solid var(--line);
+}
+.footer-inner{
+  max-width:1360px;margin:0 auto;padding:36px 24px 20px;
+  display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px;
+}
+.footer-brand .fb-name{
+  display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;
+  color:var(--rose-deep);margin-bottom:10px;
+}
+.footer-brand .fb-name svg{width:30px;height:30px;}
+.footer-brand p{font-size:13.5px;color:var(--ink-2);max-width:320px;}
+.footer-col h4{font-size:14px;margin-bottom:10px;color:var(--ink);}
+.footer-col ul{list-style:none;margin:0;padding:0;}
+.footer-col li{margin-bottom:6px;}
+.footer-col a{font-size:13.5px;color:var(--ink-2);}
+.footer-col a:hover{color:var(--rose-deep);}
+.footer-bottom{
+  border-top:1px solid var(--line);padding:14px 24px 22px;max-width:1360px;margin:0 auto;
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-size:12.5px;color:var(--ink-3);
+}
+@media(max-width:900px){
+  .footer-inner{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .footer-inner{grid-template-columns:1fr;}
+  .hero{padding:26px 22px;grid-template-columns:1fr;}
+  .hero-visual{min-height:auto;}
+  .block{padding:20px 18px;}
+  .header-inner{padding:10px 16px;gap:12px;}
+  .layout{padding:0 16px;}
+  .notice-bar .inner{padding:8px 16px;}
+  .search-box input{width:100px;}
+  .news-list img{width:92px;height:70px;}
+  .updates .time{width:72px;}
+}
+@media(max-width:400px){
+  .search-box{display:none;}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="sticky-wrap">
+  <div class="notice-bar" role="region" aria-label="社区更新公告">
+    <div class="inner">
+      <span class="dot" aria-hidden="true"></span>
+      <b>今日更新</b>
+      <span>手工版新增 9 篇教程 · 城市漫游话题「秋日骑楼」收录 46 条实拍 · 问答区本周新增 128 个提问</span>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/#top" aria-label="糖心社区首页">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle cx="18" cy="18" r="16" fill="#d9556f"/>
+          <path d="M18 9c1.8 3.6 4.7 6.5 8.3 8.3-3.6 1.8-6.5 4.7-8.3 8.3-1.8-3.6-4.7-6.5-8.3-8.3C13.3 15.5 16.2 12.6 18 9z" fill="#fff3f5"/>
+          <circle cx="18" cy="17.3" r="2.4" fill="#e8a33d"/>
+        </svg>
+        <span class="brand-text">糖心社区</span>
+      </a>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="/#shouye">首页</a>
+        <a href="/#shougong">手工创作</a>
+        <a href="/#chengshi">城市漫游</a>
+        <a href="/#liaoli">居家料理</a>
+        <a href="/#chongwu">宠物日常</a>
+        <a href="/#dushu">读书观影</a>
+        <a href="/#wenda">经验问答</a>
+        <a href="/#jingxuan">精选</a>
+      </nav>
+      <div class="header-tools">
+        <form class="search-box" role="search" id="searchForm">
+          <input type="search" id="searchInput" placeholder="搜索话题 / 条目" aria-label="站内搜索">
+          <button type="submit">查找</button>
+        </form>
+        <button class="btn-ghost" type="button" id="joinBtn">加入社区</button>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="layout" id="top">
+
+  <!-- 首屏 -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div>
+      <span class="hero-eyebrow">兴趣内容聚合 · 同好话题广场</span>
+      <h1 id="heroTitle">糖心社区</h1>
+      <p class="hero-lead">这里汇集手工创作、城市漫游、居家料理、宠物日常、读书观影五类兴趣内容的具体条目、教程笔记与经验问答，也收录同好之间的真实讨论与实拍记录。</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="/#jingxuan">浏览精选条目</a>
+        <a class="btn-secondary" href="/#wenda">查看经验问答</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>1,286</strong>在册话题</div>
+        <div><strong>342</strong>本周新帖</div>
+        <div><strong>58</strong>活跃兴趣小组</div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fbe6ea"/><stop offset="1" stop-color="#fdf0dc"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="20" width="360" height="200" rx="18" fill="url(#g1)"/>
+        <rect x="34" y="42" width="150" height="96" rx="10" fill="#ffffff" stroke="#eadfe2"/>
+        <rect x="46" y="56" width="80" height="8" rx="4" fill="#d9556f" opacity=".7"/>
+        <rect x="46" y="72" width="120" height="6" rx="3" fill="#e2cfd4"/>
+        <rect x="46" y="86" width="104" height="6" rx="3" fill="#e2cfd4"/>
+        <rect x="46" y="106" width="52" height="18" rx="9" fill="#fbe6ea"/>
+        <rect x="106" y="106" width="42" height="18" rx="9" fill="#e0f0ee"/>
+        <circle cx="290" cy="86" r="44" fill="#fff" stroke="#eadfe2"/>
+        <path d="M290 60c3.4 6.8 8.8 12.2 15.6 15.6-6.8 3.4-12.2 8.8-15.6 15.6-3.4-6.8-8.8-12.2-15.6-15.6C281.2 72.2 286.6 66.8 290 60z" fill="#d9556f" opacity=".85"/>
+        <rect x="34" y="152" width="118" height="46" rx="10" fill="#fff" stroke="#eadfe2"/>
+        <rect x="46" y="164" width="60" height="7" rx="3.5" fill="#e8a33d" opacity=".8"/>
+        <rect x="46" y="178" width="88" height="6" rx="3" fill="#e2cfd4"/>
+        <rect x="164" y="152" width="96" height="46" rx="10" fill="#fff" stroke="#eadfe2"/>
+        <rect x="176" y="164" width="46" height="7" rx="3.5" fill="#3c8c86" opacity=".8"/>
+        <rect x="176" y="178" width="68" height="6" rx="3" fill="#e2cfd4"/>
+        <rect x="272" y="152" width="86" height="46" rx="10" fill="#fff" stroke="#eadfe2"/>
+        <rect x="284" y="164" width="40" height="7" rx="3.5" fill="#d9556f" opacity=".7"/>
+        <rect x="284" y="178" width="58" height="6" rx="3" fill="#e2cfd4"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 左频道栏 -->
+  <aside class="col-left" aria-label="频道索引">
+    <div class="channel-title">频道索引</div>
+    <ul class="channel-list">
+      <li><a href="/#jingxuan"><span class="ico"></span>精选条目</a></li>
+      <li><a href="/#dongtai"><span class="ico"></span>最新动态</a></li>
+      <li><a href="/#fenlei"><span class="ico"></span>分类入口</a></li>
+      <li><a href="/#shougong"><span class="ico"></span>手工创作</a></li>
+      <li><a href="/#chengshi"><span class="ico"></span>城市漫游</a></li>
+      <li><a href="/#liaoli"><span class="ico"></span>居家料理</a></li>
+      <li><a href="/#chongwu"><span class="ico"></span>宠物日常</a></li>
+      <li><a href="/#dushu"><span class="ico"></span>读书观影</a></li>
+      <li><a href="/#shenlu"><span class="ico"></span>深度解析</a></li>
+      <li><a href="/#zhiyin"><span class="ico"></span>体验路径</a></li>
+      <li><a href="/#wenda"><span class="ico"></span>经验问答</a></li>
+      <li><a href="/#pinglun"><span class="ico"></span>同好评论</a></li>
+      <li><a href="/#zixun"><span class="ico"></span>社区资讯</a></li>
+      <li><a href="/#tuijian"><span class="ico"></span>延伸推荐</a></li>
+      <li><a href="/#bangdan"><span class="ico"></span>本周榜单</a></li>
+    </ul>
+  </aside>
+
+  <!-- 主内容 -->
+  <main class="col-main">
+
+    <div class="mobile-channels" aria-label="移动频道导航">
+      <a href="/#jingxuan">精选条目</a>
+      <a href="/#dongtai">最新动态</a>
+      <a href="/#fenlei">分类入口</a>
+      <a href="/#shougong">手工创作</a>
+      <a href="/#chengshi">城市漫游</a>
+      <a href="/#liaoli">居家料理</a>
+      <a href="/#chongwu">宠物日常</a>
+      <a href="/#dushu">读书观影</a>
+      <a href="/#wenda">经验问答</a>
+      <a href="/#bangdan">本周榜单</a>
+    </div>
+
+    <!-- 1 主题领域概览 -->
+    <section class="block overview" id="shouye" aria-labelledby="ovTitle">
+      <div class="block-head">
+        <h2 id="ovTitle">兴趣社区的内容版图：手工、漫游、料理、宠物与读书观影</h2>
+        <span class="sub">领域概览</span>
+      </div>
+      <p>一个兴趣型社区的内容通常由几类方向构成：一是<strong>可动手复现的创作</strong>，比如钩针玩偶、黏土手办、旧物改造；二是<strong>可实地复现的行走</strong>，比如城市骑楼路线、独立书店巡礼、菜市场漫游；三是<strong>可日常复现的生活技能</strong>，比如一人食便当、阳台香草种植、猫咪行为观察；四是<strong>可延展讨论的阅读观影</strong>，比如科幻短篇、家庭题材影片、纪录片片单。</p>
+      <p>糖心社区目前把这些方向拆成五条主频道，每条频道下再按具体条目组织内容。以手工创作为例，社区里讨论最多的不是泛泛的“手工好看”，而是具体的<strong>「钩针星黛露改版」「奶油胶手机壳防起泡」</strong>这类能照着做的条目；城市漫游频道则偏向具体街区，如<strong>「广州恩宁路骑楼半日线」「厦门沙坡尾旧厂房改造观察」</strong>。</p>
+      <p>当前值得关注的具体内容集中在几个方向：秋冬换季的居家料理（炖煮类、烤箱类）、宠物换毛期的护理记录、年末片单与短篇书单的整理，以及手工类目的节日礼盒教程。这些条目的共同点是<strong>有明确步骤或明确判断标准</strong>，读者看完能立刻动手或立刻判断是否适合自己。</p>
+      <p>对刚进入社区的人来说，最有用的入口不是首页信息流，而是<strong>经验问答区</strong>和<strong>分类入口</strong>——前者用具体问题带出具体答案，后者按类别帮你快速定位到自己感兴趣的方向。</p>
+    </section>
+
+    <!-- 2 精选内容推荐 -->
+    <section class="block" id="jingxuan" aria-labelledby="jxTitle">
+      <div class="block-head">
+        <h2 id="jxTitle">精选内容推荐</h2>
+        <span class="sub">12 条近期被反复收藏的条目</span>
+      </div>
+      <div class="card-grid">
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-gouzheng1/400/300" alt="钩针星黛露改版教程成品展示" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#jingxuan">钩针星黛露改版教程：耳朵比例调整</a></h3>
+            <p class="desc">在原版图解基础上把耳朵缩短 2 圈、内耳换成渐变线，成品更接近原画。附线材克重对照与钩针型号建议。</p>
+            <div class="tag-row"><span class="tag">钩针</span><span class="tag amber">图解改版</span><span class="tag teal">新手可做</span></div>
+            <div class="card-meta"><span>收藏 <b>1,842</b></span><span>11-06 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-qilou2/400/300" alt="广州恩宁路骑楼街景实拍" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#chengshi">广州恩宁路骑楼半日线：从永庆坊到多宝路</a></h3>
+            <p class="desc">全程约 3.2 公里，串起 7 处可进入的老建筑，标注了每处的开放时间与能否拍照，附一张手绘路线示意图。</p>
+            <div class="tag-row"><span class="tag">城市漫游</span><span class="tag teal">广州</span><span class="tag amber">半日路线</span></div>
+            <div class="card-meta"><span>收藏 <b>1,306</b></span><span>11-05 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-biento3/400/300" alt="一人食便当摆盘示例" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#liaoli">一人食便当的 5 种主食替换方案</a></h3>
+            <p class="desc">把米饭换成藜麦、乌冬、红薯泥、杂粮饭和意面，每种给出配菜组合与冷藏后是否影响口感的具体结论。</p>
+            <div class="tag-row"><span class="tag">居家料理</span><span class="tag amber">便当</span><span class="tag teal">一人食</span></div>
+            <div class="card-meta"><span>收藏 <b>2,174</b></span><span>11-04 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-maomi4/400/300" alt="换毛期猫咪梳理记录" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#chongwu">换毛期猫咪梳理记录：三把梳子的实际效果</a></h3>
+            <p class="desc">连续 14 天记录针梳、褪毛梳和硅胶梳的收集量，附每日用时与猫咪接受度评分，结论是褪毛梳效率最高但需控频。</p>
+            <div class="tag-row"><span class="tag">宠物日常</span><span class="tag teal">猫咪护理</span><span class="tag amber">实测记录</span></div>
+            <div class="card-meta"><span>收藏 <b>987</b></span><span>11-03 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-piandan5/400/300" alt="年末科幻短篇书单封面拼贴" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#dushu">年末科幻短篇书单：12 篇适合通勤读的</a></h3>
+            <p class="desc">按单篇阅读时长排序，最短 18 分钟最长 55 分钟，每篇标注核心设定类型与是否需要前作背景。</p>
+            <div class="tag-row"><span class="tag">读书观影</span><span class="tag amber">科幻书单</span><span class="tag teal">短篇</span></div>
+            <div class="card-meta"><span>收藏 <b>1,559</b></span><span>11-02 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-shuangkou6/400/300" alt="奶油胶手机壳防起泡操作台" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#shougong">奶油胶手机壳防起泡：三个容易忽略的步骤</a></h3>
+            <p class="desc">分别讲底胶刮平、配件按压顺序和静置环境湿度控制，附失败案例对比图，说明起泡多发生在哪一步。</p>
+            <div class="tag-row"><span class="tag">手工创作</span><span class="tag amber">奶油胶</span><span class="tag teal">避坑</span></div>
+            <div class="card-meta"><span>收藏 <b>1,120</b></span><span>11-01 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-shapowei7/400/300" alt="厦门沙坡尾旧厂房外观" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#chengshi">厦门沙坡尾旧厂房改造观察笔记</a></h3>
+            <p class="desc">记录 4 栋厂房改成咖啡馆、展厅、工作室后的空间变化，附改造前后对比与可进入时段，适合建筑爱好者。</p>
+            <div class="tag-row"><span class="tag">城市漫游</span><span class="tag teal">厦门</span><span class="tag amber">建筑观察</span></div>
+            <div class="card-meta"><span>收藏 <b>764</b></span><span>10-30 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-kaoxiang8/400/300" alt="烤箱炖煮类料理成品" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#liaoli">烤箱版红酒炖牛肉：温度与时间对照表</a></h3>
+            <p class="desc">给 140℃、160℃、180℃ 三档温度各自的炖煮时长和收汁效果，说明哪档更适合第二天复热不变柴。</p>
+            <div class="tag-row"><span class="tag">居家料理</span><span class="tag amber">烤箱菜</span><span class="tag teal">炖煮</span></div>
+            <div class="card-meta"><span>收藏 <b>1,438</b></span><span>10-29 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-xiangcao9/400/300" alt="阳台香草种植盆栽" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#liaoli">阳台种香草：薄荷、罗勒、迷迭香成活率对比</a></h3>
+            <p class="desc">同一朝向下记录三种植物的光照需求、浇水频率与虫害情况，给出新手最容易养活的排序和原因。</p>
+            <div class="tag-row"><span class="tag">居家料理</span><span class="tag teal">阳台种植</span><span class="tag amber">新手向</span></div>
+            <div class="card-meta"><span>收藏 <b>902</b></span><span>10-28 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-jiatingpian10/400/300" alt="家庭题材影片观影笔记" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#dushu">家庭题材影片四部对照：叙事视角差异</a></h3>
+            <p class="desc">从子女视角、父母视角、旁观者视角和群像视角各选一部，比较同一类冲突在不同视角下的处理方式。</p>
+            <div class="tag-row"><span class="tag">读书观影</span><span class="tag amber">影片对照</span><span class="tag teal">家庭题材</span></div>
+            <div class="card-meta"><span>收藏 <b>1,011</b></span><span>10-27 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-jiuwugai11/400/300" alt="旧木椅改造成品" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#shougong">旧木椅改造：从打磨到上蜡的完整工序</a></h3>
+            <p class="desc">列出砂纸目数顺序、木蜡油涂刷遍数与干燥间隔，并说明哪些旧家具损伤不值得修复，给出判断依据。</p>
+            <div class="tag-row"><span class="tag">手工创作</span><span class="tag amber">旧物改造</span><span class="tag teal">木工</span></div>
+            <div class="card-meta"><span>收藏 <b>688</b></span><span>10-26 更新</span></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="https://picsum.photos/seed/tangxin-shudian12/400/300" alt="独立书店巡礼内景" width="400" height="300" loading="lazy">
+          <div class="card-body">
+            <h3><a href="/#chengshi">独立书店巡礼：五城十店的选书风格差异</a></h3>
+            <p class="desc">按城市分组记录十家书店的主打品类、陈列逻辑和是否设有阅读区，帮你在陌生城市快速找到对口书店。</p>
+            <div class="tag-row"><span class="tag">城市漫游</span><span class="tag teal">书店</span><span class="tag amber">五城</span></div>
+            <div class="card-meta"><span>收藏 <b>1,233</b></span><span>10-25 更新</span></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 3 最新更新 -->
+    <section class="block" id="dongtai" aria-labelledby="dtTitle">
+      <div class="block-head">
+        <h2 id="dtTitle">最新更新 · 社区动态</h2>
+        <span class="sub">2026 年 11 月 8 日前后</span>
+      </div>
+      <ul class="updates">
+        <li>
+          <span class="time">今天 10:20</span>
+          <div>
+            <div class="utitle"><span class="badge-type">手工</span><a href="/#shougong">「钩针星黛露改版教程」补充了耳朵内衬的收针视频</a><span class="badge-new">新</span></div>
+            <div class="usum">原作者在评论区补了第 7—9 圈的收针演示，解决改版后耳朵翘起的问题。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">今天 09:30</span>
+          <div>
+            <div class="utitle"><span class="badge-type">漫游</span><a href="/#chengshi">「秋日骑楼」话题收录实拍 46 条</a></div>
+            <div class="usum">新增广州、海口、汕头三地骑楼实拍，其中 12 条附了具体街道门牌与可进入时间。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">昨天 21:10</span>
+          <div>
+            <div class="utitle"><span class="badge-type">料理</span><a href="/#liaoli">烤箱炖煮对照表更新至第三版</a></div>
+            <div class="usum">新增 160℃ 档在牛腩和牛肋条上的差异记录，并修正了原表中收汁时间的误差。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">昨天 18:40</span>
+          <div>
+            <div class="utitle"><span class="badge-type">宠物</span><a href="/#chongwu">换毛期梳理记录满 14 天，补最终结论</a></div>
+            <div class="usum">作者补了一张三把梳子的收集量柱状图，并说明褪毛梳每周使用上限。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 6 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">问答</span><a href="/#wenda">问答区本周新增 128 个提问，手工类占三成</a></div>
+            <div class="usum">高频问题集中在「新手第一条围巾用什么线」「奶油胶多久能干透」两类。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 5 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">读书</span><a href="/#dushu">年末科幻短篇书单加入 3 篇新推荐</a></div>
+            <div class="usum">新增三篇单篇阅读 30 分钟以内的作品，均标注是否适合零科幻阅读基础。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 4 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">漫游</span><a href="/#chengshi">厦门沙坡尾观察笔记补改造前后对比图</a></div>
+            <div class="usum">新增 4 组同角度对比照片，并注明每栋楼当前的进入方式。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 3 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">手工</span><a href="/#shougong">「旧木椅改造」新增损伤判断清单</a></div>
+            <div class="usum">列出 6 种常见损伤及各自是否值得修复，附修复成本区间参考。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 2 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">料理</span><a href="/#liaoli">阳台香草成活率对比满 30 天</a></div>
+            <div class="usum">迷迭香成活率最高，薄荷因浇水过频出现烂根，作者补了浇水频率修正建议。</div>
+          </div>
+        </li>
+        <li>
+          <span class="time">11 月 1 日</span>
+          <div>
+            <div class="utitle"><span class="badge-type">读书</span><a href="/#dushu">家庭题材影片对照新增群像视角一部</a></div>
+            <div class="usum">补入一部群像结构作品，并调整了四部作品的比较维度顺序。</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4 分类入口 -->
+    <section class="block" id="fenlei" aria-labelledby="flTitle">
+      <div class="block-head">
+        <h2 id="flTitle">分类入口</h2>
+        <span class="sub">按内容类型定位</span>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-item" href="/#shougong"><span class="cn">手工创作</span><span class="cd">钩针、黏土、奶油胶、旧物改造</span></a>
+        <a class="cat-item" href="/#chengshi"><span class="cn">城市漫游</span><span class="cd">街区路线、老建筑、书店巡礼</span></a>
+        <a class="cat-item" href="/#liaoli"><span class="cn">居家料理</span><span class="cd">便当、烤箱菜、阳台种植</span></a>
+        <a class="cat-item" href="/#chongwu"><span class="cn">宠物日常</span><span class="cd">猫咪护理、换毛期、行为观察</span></a>
+        <a class="cat-item" href="/#dushu"><span class="cn">读书观影</span><span class="cd">短篇书单、影片对照、片单整理</span></a>
+        <a class="cat-item" href="/#wenda"><span class="cn">经验问答</span><span class="cd">新手提问、避坑经验、工具选择</span></a>
+        <a class="cat-item" href="/#shenlu"><span class="cn">深度解析</span><span class="cd">类型差异、判断维度、消费策略</span></a>
+        <a class="cat-item" href="/#bangdan"><span class="cn">本周榜单</span><span class="cd">收藏榜、讨论度、更新频率</span></a>
+      </div>
+    </section>
+
+    <!-- 5 深度解析 -->
+    <section class="block" id="shenlu" aria-labelledby="slTitle">
+      <div class="block-head">
+        <h2 id="slTitle">深度解析：五类兴趣内容各自的判断维度</h2>
+        <span class="sub">600—900 字</span>
+      </div>
+      <div class="article-body">
+        <p>兴趣内容的价值不在“看起来热闹”，而在于读者能否从中提取出可复现的步骤、可比较的维度，或可迁移的思路。糖心社区的五条主频道，各自有一套不同的判断标准。</p>
+
+        <h3>手工创作：先看可复现性，再看完成度</h3>
+        <p>判断一篇手工教程值不值得跟做，第一看它是否交代了<strong>材料规格</strong>——线材克重、钩针型号、黏土品牌软硬度、奶油胶的稠度等级。第二看是否给出<strong>失败情形的解释</strong>，比如「钩针星黛露改版教程」专门说明了耳朵翘起的原因，这比只放成品图有用得多。第三看<strong>工序是否可分阶段中断</strong>，能拆成两三个晚上完成的教程，比必须一口气做完的更现实。</p>
+        <p>常见的误区是把完成度当成唯一标准。成品精致但材料难买、步骤跳跃的条目，对新手反而是负担。社区里收藏量高的往往是<strong>工序清楚、材料常见、允许不完美</strong>的那一类。</p>
+
+        <h3>城市漫游：路线密度与进入成本</h3>
+        <p>一条漫游路线好不好用，取决于三个具体指标：<strong>步行总长</strong>、<strong>可进入点数量</strong>、<strong>每处的停留时长建议</strong>。「广州恩宁路骑楼半日线」之所以被反复引用，是因为它明确写了 3.2 公里、7 处可进入、每处建议停留 15—25 分钟，读者能据此判断自己体力是否够。</p>
+        <p>另一个容易被忽略的维度是<strong>进入成本</strong>——是否需要预约、是否消费才能进入、是否允许拍照。这些信息比“风景很美”更能决定一次漫游是否成行。</p>
+
+        <h3>居家料理：变量控制优先于配方本身</h3>
+        <p>料理类内容的关键不是配方多独特，而是<strong>变量有没有被控制住</strong>。以烤箱炖煮为例，温度、时长、容器材质、肉块大小四个变量里，至少要固定两个，结论才有参考价值。「烤箱版红酒炖牛肉」把温度分成三档对照，就是典型的控制变量写法。</p>
+        <p>对一人食场景，还要额外看<strong>复热表现</strong>和<strong>食材损耗率</strong>。一份便当方案如果第二天复热就变柴，或者需要买五种只用一次的调料，实际价值会大打折扣。</p>
+
+        <h3>宠物日常：记录周期决定可信度</h3>
+        <p>宠物类内容的可信度与<strong>记录周期</strong>强相关。三天的观察说明不了换毛期问题，两周的记录才有比较意义。「换毛期猫咪梳理记录」连续记 14 天，并给出每把梳子的收集量和猫咪接受度评分，这种写法比单次体验分享更可靠。</p>
+        <p>还要注意<strong>个体差异声明</strong>。猫的毛长、年龄、健康状况不同，同一把梳子的效果可能差很多，负责任的记录会写明适用条件。</p>
+
+        <h3>读书观影：比较维度要提前说清</h3>
+        <p>书单和片单最容易写成流水账。有价值的整理会先说明<strong>比较维度</strong>——是按阅读时长、按设定类型、按叙事视角，还是按是否需要前作背景。「家庭题材影片四部对照」明确按叙事视角分组，读者就能带着框架去看，而不是被动接收推荐。</p>
+        <div class="callout">一个通用判断法：任何兴趣内容，先问它<strong>解决了哪个具体问题</strong>，再问它<strong>给出了什么可验证的细节</strong>。两个问题都有明确答案的条目，通常值得投入时间。</div>
+      </div>
+    </section>
+
+    <!-- 6 体验路径 -->
+    <section class="block" id="zhiyin" aria-labelledby="zyTitle">
+      <div class="block-head">
+        <h2 id="zyTitle">体验路径：从哪类内容开始看，怎么判断值不值得跟</h2>
+        <span class="sub">消费顺序与判断依据</span>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>先按“能否动手”分流</h3>
+          <p>如果你打算实际做点什么，优先进入手工创作或居家料理频道；如果只是想在周末出门走走，直接看城市漫游的具体路线。读书观影更适合碎片时间，宠物日常则偏向长期跟踪。</p>
+        </li>
+        <li>
+          <h3>用“材料/成本清单”做第一轮筛选</h3>
+          <p>手工看材料是否常见、料理看调料是否复用、漫游看门票与交通成本。清单越短、越接近你现有条件的条目，越值得先跟。</p>
+        </li>
+        <li>
+          <h3>看评论区有没有“失败反馈”</h3>
+          <p>一篇教程如果评论区只有夸赞，参考价值有限；有具体失败案例和作者回应的条目，往往已经帮你排掉了一部分坑。</p>
+        </li>
+        <li>
+          <h3>同类条目之间比“变量是否固定”</h3>
+          <p>两个烤箱菜配方，选那个明确写了温度、时长和容器的那份。两条漫游路线，选那个标注了步行总长和可进入点的那条。</p>
+        </li>
+        <li>
+          <h3>最后再决定是否长期关注作者</h3>
+          <p>连续更新、愿意修正错误的作者，比单篇爆款更值得订阅。看更新频率和修订记录，比看单篇数据更准。</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 7 FAQ -->
+    <section class="block faq" id="wenda" aria-labelledby="wdTitle">
+      <div class="block-head">
+        <h2 id="wdTitle">经验问答</h2>
+        <span class="sub">6 个高频问题</span>
+      </div>
+
+      <details>
+        <summary>第一次做钩针，选围巾还是玩偶更合适？</summary>
+        <div class="answer">围巾更合适。围巾只用基础针法，容错率高，织错了拆几行也不影响整体；玩偶需要换色、加减针和缝合，对针目松紧要求更高。建议先用中粗线配 4.0mm 钩针做一条短围巾，熟悉手感后再进玩偶类教程。</div>
+      </details>
+
+      <details>
+        <summary>奶油胶手机壳一般多久能干透？</summary>
+        <div class="answer">表面结皮通常 6—8 小时，完全干透需要 24—48 小时，具体取决于涂层厚度和室内湿度。湿度高于 70% 时干透时间会明显拉长，建议在通风处静置并避免叠放。厚涂的部位即使表面干了，内部仍可能未固化。</div>
+      </details>
+
+      <details>
+        <summary>城市漫游路线，怎么判断自己体力够不够？</summary>
+        <div class="answer">看两个数字：步行总长和可进入点数量。3 公里以内、可进入点 5 个左右的路线，半天比较从容；超过 5 公里或可进入点超过 10 个，建议拆成两次走。另外注意路线是否有明显爬坡或长时间无休息点。</div>
+      </details>
+
+      <details>
+        <summary>一人食便当，哪些菜不适合隔夜复热？</summary>
+        <div class="answer">叶菜类、海鲜类和裹粉油炸类复热后口感下降最明显；根茎类、炖煮类和卤味复热表现较好。如果必须带叶菜，建议焯水后单独装盒、吃前再拌。便当方案里主食替换成杂粮饭或意面，复热后也更稳定。</div>
+      </details>
+
+      <details>
+        <summary>换毛期给猫梳毛，一天梳几次比较合适？</summary>
+        <div class="answer">褪毛梳每天一次即可，每次 5—8 分钟，过度使用可能刺激皮肤；针梳可以早晚各一次，主要处理浮毛；硅胶梳适合猫咪接受度低时作为过渡。换毛高峰期可适当增加，但要以猫咪不抗拒为前提。</div>
+      </details>
+
+      <details>
+        <summary>科幻短篇书单里，怎么挑适合零基础读者的？</summary>
+        <div class="answer">优先选单篇阅读时长 30 分钟以内、核心设定不依赖前作、没有大量自造术语的作品。书单里标注了“是否需要前作背景”的条目，直接跳过标“需要”的那几篇就行。设定类作品比硬科幻更容易进入。</div>
+      </details>
+    </section>
+
+    <!-- 8 用户评论 -->
+    <section class="block" id="pinglun" aria-labelledby="plTitle">
+      <div class="block-head">
+        <h2 id="plTitle">同好评论</h2>
+        <span class="sub">来自具体条目的讨论</span>
+      </div>
+      <div class="comments">
+        <div class="comment"><div class="chead"><span class="nick">柠檬气泡水</span><span class="cdate">11-08</span></div><p>照着钩针星黛露改版做的，耳朵确实不翘了，就是内耳渐变线我买错色号，成品偏粉。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">骑楼下等雨</span><span class="cdate">11-08</span></div><p>恩宁路那条线走完了，多宝路那段在修路，实际要绕一下，建议作者更新下路线图。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">一只橘坐垫</span><span class="cdate">11-07</span></div><p>褪毛梳真的有用，但我家短毛猫用了会打喷嚏，改成隔天用就好多了。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">烤箱第三层</span><span class="cdate">11-07</span></div><p>160℃ 那档我试了牛肋条，收汁时间比表上多了 10 分钟，可能跟我家烤箱温差有关。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">沙坡尾常客</span><span class="cdate">11-06</span></div><p>沙坡尾那篇写得挺细，不过有一栋楼现在改成民宿了，不让随便进，去之前最好先问。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">奶油胶翻车王</span><span class="cdate">11-06</span></div><p>防起泡那篇救了我，原来是我静置的时候放在阳台，湿度太高了。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">通勤读短篇</span><span class="cdate">11-05</span></div><p>书单按阅读时长排序很实用，我挑了 25 分钟那篇，地铁上刚好读完。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">木屑满屋</span><span class="cdate">11-05</span></div><p>旧木椅改造的砂纸目数顺序是对的，但我从 120 目起步还是太粗，建议从 180 开始。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">薄荷杀手</span><span class="cdate">11-04</span></div><p>阳台香草那篇说薄荷容易烂根，我深有体会，现在改成一周浇两次才活过来。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">片单收藏夹</span><span class="cdate">11-04</span></div><p>家庭题材四部对照里群像那部我没看过，找来看看，其他三部视角分析挺到位。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">便当练习生</span><span class="cdate">11-03</span></div><p>主食替换方案里红薯泥冷藏后有点出水，建议吃前再拌一下，其他几种没问题。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">书店地图控</span><span class="cdate">11-03</span></div><p>五城十店那篇选书风格写得很具体，比单纯列地址有用，希望补上营业时间。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">钩针新手村</span><span class="cdate">11-02</span></div><p>围巾那条建议很中肯，我先织了条短的，确实比直接做玩偶有信心。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">半夜看片</span><span class="cdate">11-02</span></div><p>科幻短篇里标“需要前作背景”的那几篇我跳过了，剩下的读起来确实没门槛。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">周末出门派</span><span class="cdate">11-01</span></div><p>骑楼线半日走完有点赶，我把可进入点砍到 4 个才舒服，路线本身没问题。</p></div>
+        <div class="comment"><div class="chead"><span class="nick">猫毛收集者</span><span class="cdate">11-01</span></div><p>三把梳子我只有两把，针梳加硅胶梳的组合对我家布偶够用了。</p></div>
+      </div>
+    </section>
+
+    <!-- 9 相关资讯 -->
+    <section class="block" id="zixun" aria-labelledby="zxTitle">
+      <div class="block-head">
+        <h2 id="zxTitle">相关资讯</h2>
+        <span class="sub">社区内外的具体动态</span>
+      </div>
+      <ul class="news-list">
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-sg/600/400" alt="手工创作频道新版块上线示意" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-11-08</div>
+            <h3><a href="/#shougong">手工创作频道新增「材料替代」子版块</a></h3>
+            <p>首批收录 18 条替代方案，覆盖线材、黏土和奶油胶三类，每条注明替代后的效果差异。</p>
+          </div>
+        </li>
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-ql/600/400" alt="秋日骑楼话题实拍合集封面" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-11-06</div>
+            <h3><a href="/#chengshi">「秋日骑楼」话题实拍突破 200 条</a></h3>
+            <p>话题从广州扩展到海口、汕头、泉州四地，新增实拍中近三成附有具体门牌和可进入说明。</p>
+          </div>
+        </li>
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-wd/600/400" alt="问答区高频问题统计图" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-11-05</div>
+            <h3><a href="/#wenda">问答区公布 10 月高频问题榜：手工类占 31%</a></h3>
+            <p>前十问题中，材料选择和工具型号占六条，社区据此整理了一份新手工具对照表。</p>
+          </div>
+        </li>
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-ll/600/400" alt="烤箱料理温度对照修订公告" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-11-03</div>
+            <h3><a href="/#liaoli">烤箱炖煮对照表修订：修正 180℃ 档收汁时间</a></h3>
+            <p>根据 27 条用户反馈，180℃ 档收汁时间由 12 分钟调整为 15—18 分钟，并补充容器材质影响说明。</p>
+          </div>
+        </li>
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-ds/600/400" alt="年末书单片单整理专题页" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-11-02</div>
+            <h3><a href="/#dushu">年末书单片单专题开启，首期聚焦短篇</a></h3>
+            <p>专题按阅读时长分档，首期收录 12 篇科幻短篇，后续将补充非虚构和家庭题材影片。</p>
+          </div>
+        </li>
+        <li>
+          <img src="https://picsum.photos/seed/tangxin-zixun-cw/600/400" alt="宠物换毛期护理记录合集" width="600" height="400" loading="lazy">
+          <div class="nbody">
+            <div class="ndate">2026-10-30</div>
+            <h3><a href="/#chongwu">宠物日常频道发起「换毛期 14 天记录」征集</a></h3>
+            <p>已有 63 位用户提交记录，涵盖长短毛猫犬，社区将按毛长和年龄分组整理对照结论。</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 10 相关推荐 -->
+    <section class="block" id="tuijian" aria-labelledby="tjTitle">
+      <div class="block-head">
+        <h2 id="tjTitle">相关推荐</h2>
+        <span class="sub">延伸方向与具体条目</span>
+      </div>
+      <div class="reco-tags">
+        <a href="/#shougong">黏土手办上色顺序 <span class="n">46 条</span></a>
+        <a href="/#shougong">旧物改造损伤判断 <span class="n">18 条</span></a>
+        <a href="/#chengshi">海口骑楼老街路线 <span class="n">22 条</span></a>
+        <a href="/#chengshi">独立书店选书风格 <span class="n">31 条</span></a>
+        <a href="/#liaoli">一人食便当冷藏方案 <span class="n">57 条</span></a>
+        <a href="/#liaoli">阳台香草虫害处理 <span class="n">29 条</span></a>
+        <a href="/#chongwu">猫咪应激反应观察 <span class="n">40 条</span></a>
+        <a href="/#dushu">非虚构通勤书单 <span class="n">25 条</span></a>
+      </div>
+    </section>
+
+    <!-- 11 本周榜单 -->
+    <section class="block" id="bangdan" aria-labelledby="bdTitle">
+      <div class="block-head">
+        <h2 id="bdTitle">本周收藏榜</h2>
+        <span class="sub">截至 2026-11-08</span>
+      </div>
+      <ol class="rank-list">
+        <li><span class="rk">1</span><span class="rtitle"><a href="/#liaoli">一人食便当的 5 种主食替换方案</a></span><span class="rstat">收藏 2,174</span></li>
+        <li><span class="rk">2</span><span class="rtitle"><a href="/#shougong">钩针星黛露改版教程：耳朵比例调整</a></span><span class="rstat">收藏 1,842</span></li>
+        <li><span class="rk">3</span><span class="rtitle"><a href="/#dushu">年末科幻短篇书单：12 篇适合通勤读的</a></span><span class="rstat">收藏 1,559</span></li>
+        <li><span class="rk">4</span><span class="rtitle"><a href="/#liaoli">烤箱版红酒炖牛肉：温度与时间对照表</a></span><span class="rstat">收藏 1,438</span></li>
+        <li><span class="rk">5</span><span class="rtitle"><a href="/#chengshi">广州恩宁路骑楼半日线：从永庆坊到多宝路</a></span><span class="rstat">收藏 1,306</span></li>
+        <li><span class="rk">6</span><span class="rtitle"><a href="/#chengshi">独立书店巡礼：五城十店的选书风格差异</a></span><span class="rstat">收藏 1,233</span></li>
+        <li><span class="rk">7</span><span class="rtitle"><a href="/#shougong">奶油胶手机壳防起泡：三个容易忽略的步骤</a></span><span class="rstat">收藏 1,120</span></li>
+        <li><span class="rk">8</span><span class="rtitle"><a href="/#dushu">家庭题材影片四部对照：叙事视角差异</a></span><span class="rstat">收藏 1,011</span></li>
+        <li><span class="rk">9</span><span class="rtitle"><a href="/#chongwu">换毛期猫咪梳理记录：三把梳子的实际效果</a></span><span class="rstat">收藏 987</span></li>
+        <li><span class="rk">10</span><span class="rtitle"><a href="/#liaoli">阳台种香草：薄荷、罗勒、迷迭香成活率对比</a></span><span class="rstat">收藏 902</span></li>
+      </ol>
+    </section>
+
+  </main>
+
+  <!-- 右辅助栏 -->
+  <aside class="col-right" aria-label="辅助信息">
+    <div class="side-card">
+      <h3><span class="dot"></span>今日热帖</h3>
+      <ul class="side-list">
+        <li><span class="idx">1</span><a href="/#shougong">钩针星黛露耳朵收针法讨论</a><span class="hot">+186</span></li>
+        <li><span class="idx">2</span><a href="/#liaoli">烤箱温差到底怎么校准</a><span class="hot">+142</span></li>
+        <li><span class="idx">3</span><a href="/#chengshi">骑楼路线雨天替代方案</a><span class="hot">+119</span></li>
+        <li><span class="idx">4</span><a href="/#chongwu">短毛猫适合用褪毛梳吗</a><span class="hot">+96</span></li>
+        <li><span class="idx">5</span><a href="/#dushu">通勤读短篇的排版选择</a><span class="hot">+83</span></li>
+      </ul>
+    </div>
+
+    <div class="side-card">
+      <h3><span class="dot"></span>话题标签</h3>
+      <div class="topic-cloud">
+        <a href="/#shougong">钩针图解</a>
+        <a href="/#shougong">奶油胶避坑</a>
+        <a href="/#chengshi">骑楼路线</a>
+        <a href="/#chengshi">独立书店</a>
+        <a href="/#liaoli">一人食便当</a>
+        <a href="/#liaoli">烤箱菜</a>
+        <a href="/#chongwu">换毛期</a>
+        <a href="/#dushu">科幻短篇</a>
+        <a href="/#dushu">家庭题材</a>
+        <a href="/#wenda">新手工具</a>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h3><span class="dot"></span>更新流</h3>
+      <ul class="update-stream">
+        <li><div class="st">今天 10:20</div><div class="sn"><a href="/#shougong">星黛露改版补收针视频</a></div></li>
+        <li><div class="st">今天 09:30</div><div class="sn"><a href="/#chengshi">秋日骑楼收录 46 条实拍</a></div></li>
+        <li><div class="st">昨天 21:10</div><div class="sn"><a href="/#liaoli">烤箱对照表第三版</a></div></li>
+        <li><div class="st">11-06</div><div class="sn"><a href="/#wenda">问答区新增 128 提问</a></div></li>
+        <li><div class="st">11-04</div><div class="sn"><a href="/#chengshi">沙坡尾补对比图</a></div></li>
+      </ul>
+      <p class="side-note">更新流按发布时间倒序排列，点击条目可跳转至对应内容区。</p>
+    </div>
+
+    <div class="side-card">
+      <h3><span class="dot"></span>新手起步提示</h3>
+      <p class="side-note" style="margin-top:0;">第一次来，建议先看「经验问答」里的材料选择和工具型号两类问题，再按兴趣进入对应频道。手工类先做围巾，料理类先从一人食便当入手，成功率更高。</p>
+    </div>
+  </aside>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="fb-name">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" fill="#d9556f"/>
+          <path d="M16 8c1.6 3.2 4.2 5.8 7.4 7.4-3.2 1.6-5.8 4.2-7.4 7.4-1.6-3.2-4.2-5.8-7.4-7.4C11.8 13.8 14.4 11.2 16 8z" fill="#fff3f5"/>
+        </svg>
+        糖心社区
+      </div>
+      <p>兴趣内容聚合与同好话题广场，覆盖手工创作、城市漫游、居家料理、宠物日常、读书观影五类方向的具体条目、教程与经验问答。</p>
+    </div>
+    <div class="footer-col">
+      <h4>内容频道</h4>
+      <ul>
+        <li><a href="/#shougong">手工创作</a></li>
+        <li><a href="/#chengshi">城市漫游</a></li>
+        <li><a href="/#liaoli">居家料理</a></li>
+        <li><a href="/#chongwu">宠物日常</a></li>
+        <li><a href="/#dushu">读书观影</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>社区栏目</h4>
+      <ul>
+        <li><a href="/#jingxuan">精选内容推荐</a></li>
+        <li><a href="/#dongtai">最新更新动态</a></li>
+        <li><a href="/#wenda">经验问答</a></li>
+        <li><a href="/#pinglun">同好评论</a></li>
+        <li><a href="/#bangdan">本周收藏榜</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>延伸阅读</h4>
+      <ul>
+        <li><a href="/#shenlu">深度解析</a></li>
+        <li><a href="/#zhiyin">体验路径</a></li>
+        <li><a href="/#zixun">相关资讯</a></li>
+        <li><a href="/#tuijian">相关推荐</a></li>
+        <li><a href="/#fenlei">分类入口</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 糖心社区 · 内容聚合示例页</span>
+    <span>部分内容为示例数据，仅用于展示页面结构</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('searchForm');
+  var input = document.getElementById('searchInput');
+  if(!form || !input) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var q = input.value.trim();
+    if(!q){ input.focus(); return; }
+    var sections = document.querySelectorAll('main section[id], main .block[id]');
+    var found = null;
+    var lower = q.toLowerCase();
+    for(var i=0;i<sections.length;i++){
+      var txt = (sections[i].textContent || '').toLowerCase();
+      if(txt.indexOf(lower) !== -1){ found = sections[i]; break; }
+    }
+    if(found){
+      var top = found.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({top:top, behavior:'smooth'});
+      found.style.transition = 'box-shadow .3s';
+      found.style.boxShadow = '0 0 0 3px rgba(217,85,111,.25)';
+      setTimeout(function(){ found.style.boxShadow = ''; }, 1600);
+    } else {
+      alert('未找到与「' + q + '」相关的内容，试试「钩针」「骑楼」「便当」「换毛」「书单」等关键词。');
+    }
+  });
+  var joinBtn = document.getElementById('joinBtn');
+  if(joinBtn){
+    joinBtn.addEventListener('click', function(){
+      alert('加入社区为示例入口，正式上线后可提交兴趣标签。');
+    });
+  }
+})();
+</script>
+</body>
+                                </html>
