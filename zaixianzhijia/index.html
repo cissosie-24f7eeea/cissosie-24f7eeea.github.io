@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线之家 - 影视剧集在线观看与推荐</title>
+  <meta name="description" content="在线之家汇聚热播剧集、电影和综艺，提供最新上映、高分剧集、类型分类与用户评论，适合追剧迷与影视爱好者查找和观看。">
+  <meta name="keywords" content="热播剧集, 电影推荐, 高分剧集, 影视分类, 在线观看">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231e3a5f'/%3E%3Cpath d='M30 35 L70 35 L70 45 L30 45 Z M30 55 L55 55 L55 65 L30 65 Z' fill='%23f5c542'/%3E%3Ccircle cx='78' cy='62' r='10' fill='%23e85d5d'/%3E%3C/svg%3E">
+  <style>
+    /* ---------- 基础重置与变量 ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #1a2634;
+      --text-secondary: #4e5b6b;
+      --text-muted: #6d7a8a;
+      --border: #e2e8f0;
+      --primary: #1e3a5f;
+      --primary-light: #2e5077;
+      --accent: #e85d5d;
+      --accent-light: #fef0f0;
+      --gold: #f5c542;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --header-height: 64px;
+      --announce-height: 40px;
+      --sticky-offset: calc(var(--header-height) + var(--announce-height));
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --container-width: 1360px;
+    }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--sticky-offset);
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    ul, ol {
+      list-style: none;
+    }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ---------- 吸顶公告条 + 页头 ---------- */
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--panel);
+      box-shadow: var(--shadow-sm);
+    }
+    .announce-bar {
+      height: var(--announce-height);
+      background: linear-gradient(90deg, #1e3a5f 0%, #2e5077 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      letter-spacing: 0.3px;
+      padding: 0 16px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .announce-bar strong {
+      color: var(--gold);
+      font-weight: 600;
+      margin: 0 4px;
+    }
+    .site-header {
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      max-width: var(--container-width);
+      margin: 0 auto;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .brand svg {
+      width: 36px;
+      height: 36px;
+    }
+    .brand-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+    .header-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .header-nav a {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .header-nav a:hover,
+    .header-nav a:focus-visible {
+      background: var(--accent-light);
+      color: var(--accent);
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+    .header-nav a:focus-visible {
+      outline-color: var(--primary);
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border-radius: 24px;
+      padding: 2px 4px 2px 16px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    .search-box:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30,58,95,0.1);
+    }
+    .search-box input {
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      font-size: 0.9rem;
+      width: 160px;
+      outline: none;
+      color: var(--text);
+    }
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+    .search-box button {
+      background: var(--primary);
+      color: #fff;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .search-box button:hover {
+      background: var(--primary-light);
+    }
+
+    /* ---------- 布局容器 ---------- */
+    .container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- 首屏 ---------- */
+    .hero {
+      background: linear-gradient(135deg, #0f1f33 0%, #1e3a5f 60%, #2e5077 100%);
+      color: #fff;
+      padding: 56px 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(245,197,66,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content {
+      flex: 1 1 55%;
+      min-width: 0;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,197,66,0.15);
+      color: var(--gold);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(245,197,66,0.25);
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: #d14444;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.18);
+    }
+    .hero-visual {
+      flex: 0 0 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-svg {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+    }
+
+    /* ---------- 三栏门户布局 ---------- */
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr) 240px;
+      gap: 28px;
+      padding: 40px 0 56px;
+    }
+    .channel-sidebar {
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+      align-self: start;
+    }
+    .channel-sidebar h2 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .channel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .channel-list a {
+      display: block;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .channel-list a:hover,
+    .channel-list a:focus-visible {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-left-color: var(--accent);
+      outline: none;
+    }
+    .channel-list a:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+
+    /* ---------- 主内容区通用 ---------- */
+    .main-content {
+      min-width: 0;
+    }
+    .section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .section-header h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.3px;
+    }
+    .section-header .more-link {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .section-header .more-link:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- 精选卡片网格 ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .content-card {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.25s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .content-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .card-image {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #e9edf2;
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .content-card:hover .card-image img {
+      transform: scale(1.04);
+    }
+    .card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .card-body {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #eef2f7;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    .tag-accent {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: 10px;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: auto;
+    }
+    .card-meta .rating {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .card-meta .rating::before {
+      content: '★ ';
+      font-size: 0.75rem;
+    }
+
+    /* ---------- 最新更新列表 ---------- */
+    .update-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .update-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .update-item:last-child {
+      border-bottom: none;
+    }
+    .update-item:hover {
+      background: #fafbfd;
+    }
+    .update-time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      width: 72px;
+    }
+    .update-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .update-title:hover {
+      color: var(--accent);
+    }
+    .update-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ---------- 分类入口 ---------- */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+    .category-item:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ---------- 深度解析 ---------- */
+    .deep-dive {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      padding: 28px 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    .deep-dive h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 20px 0 10px;
+    }
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+    .deep-dive p {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+    .deep-dive ul {
+      list-style: disc;
+      padding-left: 22px;
+      margin-bottom: 14px;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+    .deep-dive li {
+      margin-bottom: 6px;
+    }
+
+    /* ---------- 体验指南 ---------- */
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .step-card {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .step-content h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .step-content p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .faq-item {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 16px 20px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    .faq-item[open] summary::after {
+      content: '−';
+    }
+    .faq-item summary:hover {
+      background: #fafbfd;
+    }
+    .faq-item summary:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+    .faq-answer {
+      padding: 0 20px 18px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ---------- 用户评论 ---------- */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .comment-card {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 12px;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .comment-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .comment-user {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .comment-text {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ---------- 相关资讯 ---------- */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .news-item {
+      display: flex;
+      gap: 18px;
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+      align-items: flex-start;
+    }
+    .news-thumb {
+      width: 100px;
+      height: 72px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #e9edf2;
+    }
+    .news-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .news-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .news-date {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .news-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .news-summary {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ---------- 相关推荐标签 ---------- */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tag-cloud a {
+      display: inline-block;
+      padding: 8px 18px;
+      background: var(--panel);
+      border-radius: 24px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      box-shadow: var(--shadow-sm);
+      transition: background 0.2s, color 0.2s;
+      border: 1px solid var(--border);
+    }
+    .tag-cloud a:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ---------- 榜单 ---------- */
+    .rank-list {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .rank-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 18px;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .rank-item:last-child {
+      border-bottom: none;
+    }
+    .rank-item:hover {
+      background: #fafbfd;
+    }
+    .rank-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: #eef2f7;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .rank-item:nth-child(1) .rank-num {
+      background: #f5c542;
+      color: #1a2634;
+    }
+    .rank-item:nth-child(2) .rank-num {
+      background: #c0c8d4;
+      color: #1a2634;
+    }
+    .rank-item:nth-child(3) .rank-num {
+      background: #e0a96d;
+      color: #fff;
+    }
+    .rank-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .rank-score {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* ---------- 右侧辅助栏 ---------- */
+    .aside-panel {
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+      align-self: start;
+    }
+    .aside-box {
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .aside-box h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+    .aside-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .aside-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.85rem;
+    }
+    .aside-list .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+    .aside-list a {
+      color: var(--text-secondary);
+      transition: color 0.15s;
+      line-height: 1.5;
+    }
+    .aside-list a:hover {
+      color: var(--accent);
+    }
+    .aside-stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .aside-stat:last-child {
+      border-bottom: none;
+    }
+    .aside-stat span:last-child {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* ---------- 页脚 ---------- */
+    .site-footer {
+      background: #0f1f33;
+      color: rgba(255,255,255,0.7);
+      padding: 48px 0 24px;
+      margin-top: 24px;
+    }
+    .footer-inner {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+    }
+    .footer-brand .brand-text {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: var(--gold);
+    }
+    .footer-bottom {
+      max-width: var(--container-width);
+      margin: 32px auto 0;
+      padding: 16px 24px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ---------- 搜索无结果提示 ---------- */
+    .no-results {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      background: var(--panel);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      display: none;
+    }
+    .no-results.show {
+      display: block;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 1024px) {
+      .portal-layout {
+        grid-template-columns: 1fr 260px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .header-nav {
+        display: none;
+      }
+      .hero-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-visual {
+        flex: 0 0 auto;
+        max-width: 280px;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 740px) {
+      .portal-layout {
+        grid-template-columns: 1fr;
+      }
+      .aside-panel {
+        position: static;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .search-box input {
+        width: 100px;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .update-item {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .update-desc {
+        white-space: normal;
+        flex-basis: 100%;
+      }
+      .news-item {
+        flex-direction: column;
+      }
+      .news-thumb {
+        width: 100%;
+        height: 140px;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .comment-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 吸顶公告条 + 页头 -->
+  <div class="sticky-top">
+    <div class="announce-bar">
+      本周新增 <strong>24 部</strong> 剧集 · 《暗夜追踪》第 8 集已上线 · 2026 秋季档 10 部新剧定档
+    </div>
+    <header class="site-header">
+      <a href="/#top" class="brand" aria-label="在线之家首页">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="100" height="100" rx="20" fill="#1e3a5f"/>
+          <path d="M28 34H72V44H28V34Z" fill="#f5c542"/>
+          <path d="M28 52H56V62H28V52Z" fill="#f5c542"/>
+          <circle cx="76" cy="62" r="11" fill="#e85d5d"/>
+          <path d="M72 57L82 62L72 67V57Z" fill="#fff"/>
+        </svg>
+        <span class="brand-text">在线之家</span>
+      </a>
+      <nav class="header-nav" aria-label="主导航">
+        <a href="/#hot">热播剧集</a>
+        <a href="/#movies">电影推荐</a>
+        <a href="/#variety">综艺节目</a>
+        <a href="/#anime">动漫番剧</a>
+        <a href="/#ranking">榜单</a>
+        <a href="/#news">影视资讯</a>
+      </nav>
+      <div class="search-box" role="search">
+        <input type="search" id="searchInput" placeholder="搜索剧集、电影、综艺…" aria-label="搜索影视内容">
+        <button type="button" id="searchBtn" aria-label="搜索">搜索</button>
+      </div>
+    </header>
+  </div>
+
+  <!-- 首屏 -->
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <span class="hero-badge">2026 秋季档 · 持续更新</span>
+        <h1>在线之家</h1>
+        <p class="hero-desc">
+          汇聚热播剧集、高分电影、口碑综艺与热门动漫，提供最新上映信息、类型分类筛选与真实用户评论，帮你在海量片单中快速找到今晚想看的那一部。
+        </p>
+        <div class="hero-actions">
+          <a href="/#hot" class="btn-primary">浏览热播</a>
+          <a href="/#guide" class="btn-secondary">观看指南</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg class="hero-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="30" width="320" height="200" rx="16" fill="#0f1f33" stroke="#2e5077" stroke-width="2"/>
+          <rect x="60" y="50" width="120" height="80" rx="8" fill="#1e3a5f"/>
+          <rect x="60" y="50" width="120" height="80" rx="8" fill="url(#g1)" opacity="0.6"/>
+          <rect x="200" y="50" width="140" height="36" rx="6" fill="#2e5077"/>
+          <rect x="200" y="94" width="140" height="36" rx="6" fill="#2e5077" opacity="0.6"/>
+          <circle cx="120" cy="90" r="18" fill="#e85d5d" opacity="0.8"/>
+          <path d="M114 82L130 90L114 98V82Z" fill="#fff"/>
+          <rect x="60" y="150" width="280" height="2" fill="#2e5077"/>
+          <rect x="60" y="170" width="80" height="10" rx="4" fill="#f5c542" opacity="0.7"/>
+          <rect x="150" y="170" width="60" height="10" rx="4" fill="#2e5077"/>
+          <rect x="220" y="170" width="100" height="10" rx="4" fill="#2e5077" opacity="0.5"/>
+          <rect x="60" y="190" width="200" height="8" rx="4" fill="#2e5077" opacity="0.3"/>
+          <defs>
+            <linearGradient id="g1" x1="60" y1="50" x2="180" y2="130">
+              <stop offset="0%" stop-color="#e85d5d"/>
+              <stop offset="100%" stop-color="#1e3a5f"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主内容区：三栏门户布局 -->
+  <div class="container">
+    <div class="portal-layout">
+
+      <!-- 左频道索引 -->
+      <aside class="channel-sidebar" aria-label="频道索引">
+        <h2>频道索引</h2>
+        <nav class="channel-list">
+          <a href="/#hot">热播剧集</a>
+          <a href="/#movies">电影推荐</a>
+          <a href="/#variety">综艺节目</a>
+          <a href="/#anime">动漫番剧</a>
+          <a href="/#category">类型分类</a>
+          <a href="/#deep">深度解析</a>
+          <a href="/#guide">观看指南</a>
+          <a href="/#faq">常见问题</a>
+          <a href="/#comments">用户评论</a>
+          <a href="/#news">影视资讯</a>
+          <a href="/#ranking">热门榜单</a>
+          <a href="/#related">相关推荐</a>
+        </nav>
+      </aside>
+
+      <!-- 主内容 -->
+      <div class="main-content">
+
+        <!-- 主题领域概览 -->
+        <section class="section" id="overview">
+          <div class="section-header">
+            <h2>影视内容领域概览</h2>
+          </div>
+          <div style="background:var(--panel);border-radius:var(--radius-md);padding:24px 28px;box-shadow:var(--shadow-sm);">
+            <p style="margin-bottom:12px;color:var(--text-secondary);font-size:0.92rem;line-height:1.75;">
+              在线之家所覆盖的影视内容，大致可以分为剧集、电影、综艺和动漫四条主线。剧集以周播和全集上线两种模式为主，国产剧与英美剧的更新节奏差异明显——国产剧通常每周更新 4—6 集，英美剧则按周更单集。电影板块以院线新片和经典修复为主，近期上线的《深海救援》和《长夜将尽》都是关注度较高的作品。综艺方面，音乐竞演类《声浪对决》和慢生活类《山间来信》代表了两种截然不同的观看节奏。动漫番剧则集中在十月新番和经典长篇连载，适合不同追番习惯的观众。
+            </p>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.75;">
+              当前值得关注的具体方向包括：悬疑刑侦剧的密集上线、现实主义题材电影的回归、以及短剧形态对传统剧集节奏的影响。对于刚接触这个领域的观众，建议先根据自己可投入的时间长度选择类型——单集 45 分钟的周播剧适合碎片时间，而 6 集迷你剧更适合周末集中观看。
+            </p>
+          </div>
+        </section>
+
+        <!-- 精选内容推荐 -->
+        <section class="section" id="hot">
+          <div class="section-header">
+            <h2>本周热播推荐</h2>
+            <a href="/#ranking" class="more-link">查看完整榜单 →</a>
+          </div>
+          <div class="card-grid">
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/anye-zhuizong01/400/300" alt="暗夜追踪剧集封面" width="400" height="300" loading="lazy">
+                <span class="card-badge">更新至 8 集</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">暗夜追踪</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">悬疑刑侦</span>
+                  <span class="tag">周播</span>
+                  <span class="tag">2026 新剧</span>
+                </div>
+                <p class="card-desc">刑警队与法医联手追查一桩跨越十年的连环案，每集以不同证人视角展开，第 8 集反转揭示关键证物来源。</p>
+                <div class="card-meta">
+                  <span class="rating">9.1</span>
+                  <span>今晚 20:00 更新</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/shenhai-jiuyuan02/400/300" alt="深海救援电影海报" width="400" height="300" loading="lazy">
+                <span class="card-badge">院线新片</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">深海救援</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">灾难动作</span>
+                  <span class="tag">国语</span>
+                  <span class="tag">IMAX</span>
+                </div>
+                <p class="card-desc">深海钻井平台突发事故，救援队 36 小时内完成三次下潜。特效场面扎实，适合喜欢工业级灾难片的观众。</p>
+                <div class="card-meta">
+                  <span class="rating">8.7</span>
+                  <span>11 月 5 日上线</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/shenglang-duijue03/400/300" alt="声浪对决综艺海报" width="400" height="300" loading="lazy">
+                <span class="card-badge">每周五更新</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">声浪对决</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">音乐竞演</span>
+                  <span class="tag">综艺</span>
+                  <span class="tag">现场</span>
+                </div>
+                <p class="card-desc">32 位歌手分四组进行改编对抗赛，本期主题为“九十年代金曲新唱”，淘汰机制改为观众实时投票。</p>
+                <div class="card-meta">
+                  <span class="rating">8.4</span>
+                  <span>第 6 期已上线</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/shanjian-laixin04/400/300" alt="山间来信综艺封面" width="400" height="300" loading="lazy">
+                <span class="card-badge">治愈慢综</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">山间来信</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">慢生活</span>
+                  <span class="tag">真人秀</span>
+                  <span class="tag">民宿</span>
+                </div>
+                <p class="card-desc">五位嘉宾在云南山村民宿经营三个月，每期结尾朗读一封观众来信，节奏舒缓适合下饭观看。</p>
+                <div class="card-meta">
+                  <span class="rating">8.9</span>
+                  <span>第 4 期已上线</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/changye-jiangjin05/400/300" alt="长夜将尽电影剧照" width="400" height="300" loading="lazy">
+                <span class="card-badge">高分口碑</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">长夜将尽</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">现实主义</span>
+                  <span class="tag">剧情</span>
+                  <span class="tag">获奖</span>
+                </div>
+                <p class="card-desc">小城医生在医疗资源匮乏的乡镇坚守二十年，影片以纪实手法呈现基层医疗的真实困境，获年度最佳编剧。</p>
+                <div class="card-meta">
+                  <span class="rating">9.3</span>
+                  <span>11 月 2 日上线</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/xingji-zhilu06/400/300" alt="星际之路动漫封面" width="400" height="300" loading="lazy">
+                <span class="card-badge">十月新番</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">星际之路</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">科幻冒险</span>
+                  <span class="tag">番剧</span>
+                  <span class="tag">周更</span>
+                </div>
+                <p class="card-desc">货船少年意外获得星图碎片，踏上寻找失落航线的旅程。本季第 7 集已更新，作画质量稳定。</p>
+                <div class="card-meta">
+                  <span class="rating">8.6</span>
+                  <span>每周三更新</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/fengkuang-shitang07/400/300" alt="疯狂食堂剧集封面" width="400" height="300" loading="lazy">
+                <span class="card-badge">喜剧黑马</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">疯狂食堂</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">职场喜剧</span>
+                  <span class="tag">短剧</span>
+                  <span class="tag">每集20分钟</span>
+                </div>
+                <p class="card-desc">互联网公司食堂承包商的荒诞日常，用外卖大战、团建修罗场等桥段讽刺职场生态，第二季已完结。</p>
+                <div class="card-meta">
+                  <span class="rating">8.8</span>
+                  <span>全 12 集已上线</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <div class="card-image">
+                <img src="https://picsum.photos/seed/gucheng-yishi08/400/300" alt="古城疑事剧集封面" width="400" height="300" loading="lazy">
+                <span class="card-badge">古装探案</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">古城疑事</h3>
+                <div class="card-tags">
+                  <span class="tag tag-accent">古装悬疑</span>
+                  <span class="tag">单元剧</span>
+                  <span class="tag">2026</span>
+                </div>
+                <p class="card-desc">以唐代长安城为背景的单元探案剧，每两集一个独立案件，服化道考究，适合喜欢本格推理的观众。</p>
+                <div class="card-meta">
+                  <span class="rating">8.5</span>
+                  <span>更新至 14 集</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 最新更新 -->
+        <section class="section" id="updates">
+          <div class="section-header">
+            <h2>最新更新动态</h2>
+          </div>
+          <div class="update-list">
+            <div class="update-item">
+              <span class="update-time">今天 09:30</span>
+              <a href="/#hot" class="update-title">暗夜追踪</a>
+              <span class="update-desc">第 8 集已上线，关键证物来源揭晓</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">今天 08:15</span>
+              <a href="/#variety" class="update-title">声浪对决</a>
+              <span class="update-desc">第 6 期上线，九十年代金曲改编对抗赛</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">昨天 21:10</span>
+              <a href="/#movies" class="update-title">深海救援</a>
+              <span class="update-desc">高清版上线，新增幕后制作特辑</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">昨天 18:40</span>
+              <a href="/#anime" class="update-title">星际之路</a>
+              <span class="update-desc">第 7 集更新，星图碎片线索推进</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">11 月 6 日</span>
+              <a href="/#hot" class="update-title">古城疑事</a>
+              <span class="update-desc">第 13—14 集上线，长安水渠案收束</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">11 月 5 日</span>
+              <a href="/#variety" class="update-title">山间来信</a>
+              <span class="update-desc">第 4 期上线，嘉宾收到观众手写信</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">11 月 3 日</span>
+              <a href="/#movies" class="update-title">长夜将尽</a>
+              <span class="update-desc">导演剪辑版上线，新增 12 分钟未曝光片段</span>
+            </div>
+            <div class="update-item">
+              <span class="update-time">11 月 1 日</span>
+              <a href="/#hot" class="update-title">疯狂食堂</a>
+              <span class="update-desc">第二季全 12 集一次性放出</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 分类入口 -->
+        <section class="section" id="category">
+          <div class="section-header">
+            <h2>类型分类入口</h2>
+          </div>
+          <div class="category-grid">
+            <a href="/#hot" class="category-item">悬疑刑侦</a>
+            <a href="/#hot" class="category-item">古装探案</a>
+            <a href="/#movies" class="category-item">灾难动作</a>
+            <a href="/#movies" class="category-item">现实主义</a>
+            <a href="/#variety" class="category-item">音乐竞演</a>
+            <a href="/#variety" class="category-item">慢生活综艺</a>
+            <a href="/#anime" class="category-item">科幻冒险</a>
+            <a href="/#hot" class="category-item">职场喜剧</a>
+          </div>
+        </section>
+
+        <!-- 深度解析 -->
+        <section class="section" id="deep">
+          <div class="section-header">
+            <h2>深度解析：剧集类型与观看选择</h2>
+          </div>
+          <div class="deep-dive">
+            <h3>周播剧与全集上线的节奏差异</h3>
+            <p>2026 年秋季档的剧集排播呈现出两种明显节奏。以《暗夜追踪》为代表的周播剧，每周更新 2 集、单集 45 分钟，观众需要跟随播出周期投入约六周时间；而《疯狂食堂》这类短剧选择一次性放出全季，每集 20 分钟，适合在周末集中刷完。选择哪种模式，取决于你能接受的“追更中断感”——周播剧的悬念钩子会持续更久，全集上线的满足感则来自连贯的情节推进。</p>
+            <h3>悬疑刑侦剧的评判维度</h3>
+            <p>判断一部悬疑刑侦剧是否值得投入时间，可以从三个维度来看：案件逻辑链是否完整、人物动机是否有铺垫、以及每集结尾的钩子是否与主线相关。《暗夜追踪》第 8 集的反转之所以有效，是因为前七集通过不同证人视角埋下了证物来源的伏笔，而不是临时引入新信息。相比之下，部分同类型剧集依赖“最后一集揭秘”的套路，观看体验会打折扣。</p>
+            <ul>
+              <li><strong>逻辑自洽度：</strong>案件推理是否能用剧中已给出的线索复原。</li>
+              <li><strong>人物厚度：</strong>主角之外的配角是否有独立的行为动机。</li>
+              <li><strong>节奏控制：</strong>单集信息量是否均衡，有无明显注水段落。</li>
+            </ul>
+            <h3>电影与剧集的投入产出比</h3>
+            <p>在时间有限的情况下，电影的单次观看时长通常为 90—150 分钟，适合一次性获得完整叙事体验；剧集则需要数小时到数十小时不等的投入。以近期上线的《长夜将尽》为例，影片用 118 分钟完成了对基层医疗群像的刻画，叙事密度较高；而《古城疑事》用 14 集展开多个独立案件，适合喜欢单元剧结构的观众分段观看。两者没有优劣之分，关键在于你当下想要的是“一次性沉浸”还是“持续陪伴”。</p>
+            <h3>综艺的观看节奏选择</h3>
+            <p>音乐竞演类综艺如《声浪对决》每期有明确的对抗结果，适合实时追看并参与讨论；慢生活类综艺《山间来信》则没有强竞技属性，更适合作为背景内容或下饭观看。判断标准很简单：如果你希望每期结束有“钩子”牵引下一期，选择竞演类；如果更看重放松氛围，慢综是更合适的选择。</p>
+          </div>
+        </section>
+
+        <!-- 体验指南 -->
+        <section class="section" id="guide">
+          <div class="section-header">
+            <h2>观看选择与消费路径</h2>
+          </div>
+          <div class="guide-steps">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h3>先确定可用时间</h3>
+                <p>单次 30 分钟以内优先考虑短剧或综艺单期；90 分钟以上可安排电影；若每周能固定投入 2—3 小时，周播剧是合适的选择。</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h3>按类型偏好筛选</h3>
+                <p>悬疑刑侦看重逻辑密度，古装探案关注服化道与单元案件质量，现实主义题材则优先看编剧和主演的过往作品。</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h3>参考评分与评论</h3>
+                <p>评分 8.5 以上通常代表制作水准在线；同时浏览用户评论中关于“节奏”“结局”的具体讨论，比单看分数更有效。</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h3>试看首集再决定</h3>
+                <p>剧集首集通常承担世界观铺陈，若前 20 分钟无法建立兴趣，后续投入的性价比会降低。电影则可以先看预告片判断风格。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+          <div class="section-header">
+            <h2>常见问题</h2>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>悬疑刑侦剧一般多久更新一次？</summary>
+              <div class="faq-answer">国产悬疑刑侦剧常见的是每周更新 4—6 集，分两天或三天播出。以《暗夜追踪》为例，每周四、周五各更新 2 集，单集 45 分钟，全季 24 集大约六周播完。英美剧则通常每周更新 1 集，一季 8—10 集。</div>
+            </details>
+            <details class="faq-item">
+              <summary>《暗夜追踪》和《古城疑事》有什么区别？</summary>
+              <div class="faq-answer">两部都是悬疑探案类型，但结构不同。《暗夜追踪》是单一主线案件贯穿全季，通过不同证人视角逐步拼凑真相；《古城疑事》是单元剧结构，每两集一个独立案件，人物关系相对固定但案件各自独立。前者适合喜欢长线悬念的观众，后者适合喜欢每集有完整收束的观众。</div>
+            </details>
+            <details class="faq-item">
+              <summary>第一次接触这类剧集，从哪一部开始看比较好？</summary>
+              <div class="faq-answer">如果偏好节奏紧凑、单集信息量大的，可以先看《暗夜追踪》；如果更习惯单元剧、每集有独立结局的，从《古城疑事》入手更容易建立观看习惯。想轻松一些的，可以先看《疯狂食堂》这类短剧，每集 20 分钟。</div>
+            </details>
+            <details class="faq-item">
+              <summary>现实主义题材电影的评判标准通常是什么？</summary>
+              <div class="faq-answer">主要看三个层面：社会议题的呈现是否具体而非口号化、人物是否有真实的困境与选择、以及结尾是否提供了有说服力的落点。以《长夜将尽》为例，影片通过乡镇医生的日常细节呈现医疗资源问题，而不是依赖台词说教，这是它获得高评价的主要原因。</div>
+            </details>
+            <details class="faq-item">
+              <summary>音乐竞演类综艺和慢综艺的观看体验有什么不同？</summary>
+              <div class="faq-answer">竞演类综艺每期有淘汰或排名结果，观看时会有明确的期待感和讨论点，适合实时追看；慢综艺没有强竞技属性，节奏舒缓，适合作为背景内容或放松时观看。两者可以按心情交替选择，不存在替代关系。</div>
+            </details>
+            <details class="faq-item">
+              <summary>动漫番剧的“十月新番”通常持续到什么时候？</summary>
+              <div class="faq-answer">十月新番一般从 10 月初开始周更，一季 12—13 集，持续到 12 月底。部分半年番会延续到次年 3 月。《星际之路》本季共 12 集，预计 12 月 24 日播出最后一集。</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 用户评论 -->
+        <section class="section" id="comments">
+          <div class="section-header">
+            <h2>用户评论</h2>
+          </div>
+          <div class="comment-grid">
+            <div class="comment-card">
+              <div class="avatar" style="background:#e85d5d;">林</div>
+              <div class="comment-body">
+                <div class="comment-user">林间看剧</div>
+                <p class="comment-text">《暗夜追踪》第 8 集那个反转确实没想到，前面几集证人回忆里的细节全都串上了，编剧是用了心的。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#2e5077;">王</div>
+              <div class="comment-body">
+                <div class="comment-user">王大叔的遥控器</div>
+                <p class="comment-text">《长夜将尽》看哭了，乡镇医生的日常拍得太真实了，没有刻意煽情，但结尾那个长镜头后劲很大。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#f5c542;color:#1a2634;">陈</div>
+              <div class="comment-body">
+                <div class="comment-user">陈小满</div>
+                <p class="comment-text">《声浪对决》这一期改编水平参差不齐，有两组改得很有想法，但有一组几乎照搬原曲，投票结果不太理解。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#6d7a8a;">赵</div>
+              <div class="comment-body">
+                <div class="comment-user">赵小刀</div>
+                <p class="comment-text">《山间来信》就是那种不用动脑子、看着很舒服的节目，适合下班后放着当背景音。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#e85d5d;">周</div>
+              <div class="comment-body">
+                <div class="comment-user">周周追剧</div>
+                <p class="comment-text">《古城疑事》的服化道真的讲究，长安城的市井气拍出来了，每个案子的凶手都不太好猜。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#2e5077;">吴</div>
+              <div class="comment-body">
+                <div class="comment-user">吴名氏</div>
+                <p class="comment-text">《深海救援》特效是合格的，但剧情有点套路，属于爆米花片，视听效果值回票价但不用太较真。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#f5c542;color:#1a2634;">郑</div>
+              <div class="comment-body">
+                <div class="comment-user">郑在追番</div>
+                <p class="comment-text">《星际之路》第 7 集作画稳住了，星图碎片这条线总算开始收，希望后面不要赶进度。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#6d7a8a;">孙</div>
+              <div class="comment-body">
+                <div class="comment-user">孙悟饭团</div>
+                <p class="comment-text">《疯狂食堂》第二季比第一季还好笑，团建修罗场那集直接笑出声，短剧就该这么拍。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#e85d5d;">李</div>
+              <div class="comment-body">
+                <div class="comment-user">李子树下</div>
+                <p class="comment-text">最近悬疑剧扎堆上线，反而有点看不过来了。《暗夜追踪》和《古城疑事》我都在追，后者更轻松。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#2e5077;">刘</div>
+              <div class="comment-body">
+                <div class="comment-user">刘星看片</div>
+                <p class="comment-text">《长夜将尽》的导演剪辑版多了 12 分钟，把结尾的留白补得更完整了，建议直接看这版。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#f5c542;color:#1a2634;">黄</div>
+              <div class="comment-body">
+                <div class="comment-user">黄小鸭</div>
+                <p class="comment-text">《声浪对决》淘汰机制改成实时投票之后感觉更刺激了，但有时候观众只凭高音投票，有点可惜。</p>
+              </div>
+            </div>
+            <div class="comment-card">
+              <div class="avatar" style="background:#6d7a8a;">徐</div>
+              <div class="comment-body">
+                <div class="comment-user">徐徐观之</div>
+                <p class="comment-text">《山间来信》第四期读信环节很真诚，没有刻意制造冲突，这种节目现在不多了。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关资讯 -->
+        <section class="section" id="news">
+          <div class="section-header">
+            <h2>影视资讯</h2>
+          </div>
+          <div class="news-list">
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-anye09/600/400" alt="暗夜追踪剧集资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-08</div>
+                <div class="news-title">《暗夜追踪》第 8 集上线，制片方确认第二季已进入筹备</div>
+                <p class="news-summary">本集上线后站内讨论量突破 3 万条，制片人在采访中透露第二季剧本会延续“多视角证人”结构，预计明年春季开拍。</p>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-changye10/600/400" alt="长夜将尽电影资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-06</div>
+                <div class="news-title">《长夜将尽》导演剪辑版上线，新增 12 分钟乡镇医疗细节</div>
+                <p class="news-summary">剪辑版补充了主角在村卫生室处理急诊的完整段落，导演在映后谈中表示这些内容原本因片长被剪。</p>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-shenglang11/600/400" alt="声浪对决综艺资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-05</div>
+                <div class="news-title">《声浪对决》第六期改编曲目单公布，九十年代金曲成主题</div>
+                <p class="news-summary">本期四组歌手分别改编《晚风》《旧信》《街角》等经典曲目，其中两组选择重新填词，引发观众对改编尺度的讨论。</p>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-xingji12/600/400" alt="星际之路动漫资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-04</div>
+                <div class="news-title">《星际之路》第 7 集播出，星图碎片线进入收束阶段</div>
+                <p class="news-summary">本集揭示了第二块星图碎片的持有者身份，制作组在社交平台表示剩余 5 集将集中推进主线，不再插入日常回。</p>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-gucheng13/600/400" alt="古城疑事剧集资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-03</div>
+                <div class="news-title">《古城疑事》长安水渠案收官，第 15—16 集进入新单元</div>
+                <p class="news-summary">水渠案以凶手自白收尾，下一单元将围绕西市胡商失踪展开。编剧表示新案子会引入更多市井线人物。</p>
+              </div>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-fengkuang14/600/400" alt="疯狂食堂短剧资讯配图" width="600" height="400" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-date">2026-11-01</div>
+                <div class="news-title">《疯狂食堂》第二季全集上线，短剧形态引发排播讨论</div>
+                <p class="news-summary">第二季 12 集一次性放出，单集 20 分钟的体量让“周末刷完”成为主要观看方式，也带出短剧与长剧排播节奏的对比话题。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关推荐 -->
+        <section class="section" id="related">
+          <div class="section-header">
+            <h2>相关推荐</h2>
+          </div>
+          <div class="tag-cloud">
+            <a href="/#hot">多视角悬疑剧</a>
+            <a href="/#hot">古装单元探案</a>
+            <a href="/#movies">现实主义剧情片</a>
+            <a href="/#movies">灾难救援题材</a>
+            <a href="/#variety">音乐竞演综艺</a>
+            <a href="/#variety">慢生活真人秀</a>
+            <a href="/#anime">十月科幻新番</a>
+            <a href="/#hot">20 分钟短剧</a>
+          </div>
+        </section>
+
+        <!-- 热门榜单 -->
+        <section class="section" id="ranking">
+          <div class="section-header">
+            <h2>本周热门榜单</h2>
+          </div>
+          <div class="rank-list">
+            <div class="rank-item">
+              <span class="rank-num">1</span>
+              <span class="rank-title">暗夜追踪</span>
+              <span class="rank-score">热度 9.4</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-num">2</span>
+              <span class="rank-title">长夜将尽</span>
+              <span class="rank-score">热度 9.2</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-num">3</span>
+              <span class="rank-title">声浪对决</span>
+              <span class="rank-score">热度 9.0</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-num">4</span>
+              <span class="rank-title">深海救援</span>
+              <span class="rank-score">热度 8.7</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-num">5</span>
+              <span class="rank-title">古城疑事</span>
+              <span class="rank-score">热度 8.6</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-num">6</span>
+              <span class="rank-title">山间来信</span>
+              <span class="rank-score">热度 8.5</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 右侧辅助栏 -->
+      <aside class="aside-panel" aria-label="辅助信息">
+        <div class="aside-box">
+          <h3>今日更新速览</h3>
+          <ul class="aside-list">
+            <li><span class="dot"></span><a href="/#hot">暗夜追踪 第 8 集</a></li>
+            <li><span class="dot"></span><a href="/#variety">声浪对决 第 6 期</a></li>
+            <li><span class="dot"></span><a href="/#anime">星际之路 第 7 集</a></li>
+            <li><span class="dot"></span><a href="/#movies">深海救援 幕后特辑</a></li>
+            <li><span class="dot"></span><a href="/#hot">古城疑事 第 13—14 集</a></li>
+          </ul>
+        </div>
+        <div class="aside-box">
+          <h3>站内数据</h3>
+          <div class="aside-stat"><span>收录剧集</span><span>1,284 部</span></div>
+          <div class="aside-stat"><span>收录电影</span><span>2,670 部</span></div>
+          <div class="aside-stat"><span>综艺节目</span><span>486 档</span></div>
+          <div class="aside-stat"><span>动漫番剧</span><span>932 部</span></div>
+        </div>
+        <div class="aside-box">
+          <h3>热门标签</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <a href="/#hot" class="tag tag-accent">悬疑刑侦</a>
+            <a href="/#hot" class="tag">古装探案</a>
+            <a href="/#movies" class="tag">现实主义</a>
+            <a href="/#variety" class="tag">音乐竞演</a>
+            <a href="/#anime" class="tag">科幻番剧</a>
+            <a href="/#hot" class="tag">短剧</a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- 页尾 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-text">在线之家</div>
+        <p>汇聚热播剧集、高分电影、口碑综艺与热门动漫，提供类型分类、观看指南与用户评论，帮你在海量片单中找到想看的那一部。</p>
+      </div>
+      <div class="footer-col">
+        <h4>剧集</h4>
+        <a href="/#hot">悬疑刑侦</a>
+        <a href="/#hot">古装探案</a>
+        <a href="/#hot">职场喜剧</a>
+        <a href="/#hot">短剧</a>
+      </div>
+      <div class="footer-col">
+        <h4>电影</h4>
+        <a href="/#movies">灾难动作</a>
+        <a href="/#movies">现实主义</a>
+        <a href="/#movies">高分口碑</a>
+        <a href="/#movies">院线新片</a>
+      </div>
+      <div class="footer-col">
+        <h4>综艺与动漫</h4>
+        <a href="/#variety">音乐竞演</a>
+        <a href="/#variety">慢生活</a>
+        <a href="/#anime">科幻冒险</a>
+        <a href="/#anime">十月新番</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>部分内容为示例数据，仅用于展示页面结构。© 2026 在线之家</p>
+    </div>
+  </footer>
+
+  <!-- 内联脚本：搜索 + 无结果反馈 -->
+  <script>
+    (function() {
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const mainContent = document.querySelector('.main-content');
+      const noResults = document.createElement('div');
+      noResults.className = 'no-results';
+      noResults.textContent = '没有找到与“”相关的内容，换个关键词试试，比如“暗夜追踪”“长夜将尽”“声浪对决”。';
+      mainContent.prepend(noResults);
+
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        const sections = mainContent.querySelectorAll('.section');
+        let found = false;
+
+        sections.forEach(function(section) {
+          const text = section.textContent.toLowerCase();
+          if (query === '' || text.includes(query)) {
+            section.style.display = '';
+            if (query !== '' && text.includes(query)) found = true;
+          } else {
+            section.style.display = 'none';
+          }
+        });
+
+        if (query === '') {
+          noResults.classList.remove('show');
+          sections.forEach(function(s) { s.style.display = ''; });
+        } else if (!found) {
+          noResults.classList.add('show');
+          noResults.textContent = '没有找到与“' + searchInput.value.trim() + '”相关的内容，换个关键词试试，比如“暗夜追踪”“长夜将尽”“声浪对决”。';
+        } else {
+          noResults.classList.remove('show');
+        }
+      }
+
+      searchBtn.addEventListener('click', performSearch);
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          performSearch();
+        }
+      });
+    })();
+  </script>
+</body>
+            </html>
