@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>漫画在线 - 热门连载与分类精选指南</title>
+  <meta name="description" content="漫画在线汇聚热血、悬疑、恋爱、古风等连载漫画与完结作品，提供具体条目推荐、更新动态、分类入口、深度类型解析与阅读顺序建议，适合漫画读者查找新作与比较不同题材。">
+  <meta name="keywords" content="连载漫画, 完结漫画, 热血少年漫, 悬疑推理漫画, 古风恋爱漫画">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232f2b5b'/%3E%3Cpath d='M30 70 L50 22 L70 70 Z' fill='%23f7c948'/%3E%3Ccircle cx='50' cy='58' r='9' fill='%23ffffff'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --panel: #ffffff;
+      --ink: #1e1c2a;
+      --ink-soft: #4a475e;
+      --muted: #79758d;
+      --line: #e3dfd6;
+      --brand: #2f2b5b;
+      --brand-strong: #1f1c40;
+      --accent: #d64f1e;
+      --accent-soft: #fdf0e9;
+      --gold: #c08a1e;
+      --gold-soft: #fbf3df;
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 2px 10px rgba(30, 28, 42, 0.05);
+      --shadow-md: 0 8px 26px rgba(30, 28, 42, 0.08);
+      --font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+      --header-h: 62px;
+      --notice-h: 38px;
+      --sticky-offset: calc(var(--notice-h) + var(--header-h) + 12px);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap;
+    }
+    .wrap {
+      width: min(1320px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+    /* 吸顶公告 */
+    .notice-bar {
+      background: var(--brand-strong);
+      color: #f7f1e0;
+      font-size: 13.5px;
+      min-height: var(--notice-h);
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .notice-bar .wrap {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding-block: 7px;
+    }
+    .notice-bar strong { color: var(--gold); font-weight: 700; letter-spacing: 0.03em; }
+    .notice-bar span { color: rgba(247,241,224,0.82); }
+    /* 吸顶页头 */
+    .site-header {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: var(--notice-h);
+      z-index: 50;
+      min-height: var(--header-h);
+    }
+    .header-inner {
+      display: flex; align-items: center; gap: 22px;
+      min-height: var(--header-h);
+      flex-wrap: wrap;
+      padding-block: 8px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--brand); display: grid; place-items: center;
+      box-shadow: 0 4px 10px rgba(47,43,91,0.25);
+    }
+    .brand-mark svg { width: 26px; height: 26px; }
+    .brand-text {
+      font-size: 21px; font-weight: 800; letter-spacing: 0.04em;
+      color: var(--brand-strong);
+    }
+    .main-nav { display: flex; gap: 4px; flex-wrap: wrap; flex: 1 1 420px; }
+    .main-nav a {
+      font-size: 14px; padding: 7px 13px; border-radius: 999px;
+      color: var(--ink-soft); transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .main-nav a:hover, .main-nav a:focus-visible {
+      background: #efecf6; color: var(--brand-strong); outline: none;
+    }
+    .header-actions { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+    .search-box {
+      display: flex; align-items: center; gap: 6px;
+      background: #f3f1eb; border: 1px solid var(--line);
+      border-radius: 999px; padding: 4px 4px 4px 14px;
+      min-width: 220px;
+    }
+    .search-box input {
+      border: none; background: transparent; outline: none;
+      font-size: 13.5px; width: 100%; color: var(--ink);
+      padding: 4px 0;
+    }
+    .search-box button {
+      border: none; background: var(--brand); color: #fff;
+      border-radius: 999px; padding: 5px 14px; font-size: 13px;
+      transition: background 0.15s;
+    }
+    .search-box button:hover { background: var(--brand-strong); }
+    .search-box button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .search-feedback { font-size: 13px; color: var(--accent); min-height: 20px; padding-left: 4px; }
+    /* 首屏 */
+    .hero {
+      background: linear-gradient(135deg, #efeafd 0%, #fdf7ec 55%, #f6eee4 100%);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1.15fr 0.85fr;
+      gap: 36px; align-items: center;
+      padding-block: 52px 44px;
+    }
+    .hero-copy h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.18; margin: 0 0 16px;
+      color: var(--brand-strong); letter-spacing: 0.02em;
+    }
+    .hero-kicker {
+      display: inline-block; font-size: 12.5px; letter-spacing: 0.14em;
+      color: var(--accent); background: var(--accent-soft);
+      padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .hero-desc {
+      font-size: 16px; color: var(--ink-soft); max-width: 44em;
+      margin: 0 0 26px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary, .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 999px; font-size: 14.5px; font-weight: 600;
+      padding: 11px 26px; transition: transform 0.12s, box-shadow 0.12s;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--brand); color: #fff;
+      box-shadow: 0 6px 16px rgba(47,43,91,0.28);
+    }
+    .btn-primary:hover { background: var(--brand-strong); transform: translateY(-1px); }
+    .btn-ghost {
+      background: #fff; color: var(--brand-strong);
+      border-color: var(--line); box-shadow: var(--shadow-sm);
+    }
+    .btn-ghost:hover { border-color: var(--brand); transform: translateY(-1px); }
+    .btn-primary:focus-visible, .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .hero-art {
+      position: relative; min-height: 260px;
+      display: grid; place-items: center;
+    }
+    .hero-art svg { width: 100%; height: auto; max-height: 320px; }
+    .hero-stat-row {
+      display: flex; gap: 18px; margin-top: 26px; flex-wrap: wrap;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+      border-radius: var(--radius-md); padding: 10px 18px;
+      font-size: 13px; color: var(--ink-soft); backdrop-filter: blur(4px);
+    }
+    .hero-stat b { display: block; font-size: 20px; color: var(--brand-strong); line-height: 1.3; }
+    /* 主体三栏布局 */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 178px minmax(0, 1fr) 252px;
+      gap: 28px;
+      padding-block: 46px 54px;
+      align-items: start;
+    }
+    .channel-index {
+      position: sticky; top: var(--sticky-offset);
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius-lg); padding: 18px 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .channel-index h2 {
+      font-size: 14px; letter-spacing: 0.06em; color: var(--muted);
+      margin: 0 0 12px 6px; font-weight: 700;
+    }
+    .channel-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+    .channel-list a {
+      display: block; font-size: 14px; padding: 8px 12px;
+      border-radius: var(--radius-sm); color: var(--ink-soft);
+      transition: background 0.15s, color 0.15s;
+    }
+    .channel-list a:hover, .channel-list a:focus-visible {
+      background: #efecf6; color: var(--brand-strong); outline: none;
+    }
+    .channel-note {
+      margin-top: 16px; font-size: 12px; color: var(--muted);
+      border-top: 1px dashed var(--line); padding-top: 12px; line-height: 1.6;
+    }
+    .main-content { min-width: 0; display: grid; gap: 34px; }
+    .aside-rail { min-width: 0; display: grid; gap: 24px; position: sticky; top: var(--sticky-offset); }
+    /* 板块通用 */
+    .section {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius-lg); padding: 24px 24px 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-head { margin-bottom: 18px; }
+    .section-kicker {
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); font-weight: 700; margin-bottom: 4px;
+    }
+    .section h2 {
+      font-size: 21px; margin: 0 0 4px; color: var(--brand-strong);
+      letter-spacing: 0.01em; line-height: 1.35;
+    }
+    .section-sub { font-size: 13.5px; color: var(--muted); margin: 0; }
+    .section p { margin: 0 0 12px; color: var(--ink-soft); }
+    .section p:last-child { margin-bottom: 0; }
+    /* 概览 */
+    .overview-lead { font-size: 15.5px; color: var(--ink-soft); margin-bottom: 10px; }
+    .overview-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .overview-tags span {
+      font-size: 12.5px; background: #f1eee7; color: var(--ink-soft);
+      border-radius: 999px; padding: 4px 12px; border: 1px solid var(--line);
+    }
+    /* 精选卡片网格 */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .comic-card {
+      background: #fbfaf7; border: 1px solid var(--line);
+      border-radius: var(--radius-md); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: box-shadow 0.18s, transform 0.18s;
+    }
+    .comic-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .comic-card img {
+      width: 100%; height: 150px; object-fit: cover;
+      border-bottom: 1px solid var(--line);
+    }
+    .comic-card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .comic-card h3 { font-size: 15px; margin: 0; color: var(--brand-strong); line-height: 1.4; }
+    .type-tag {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: var(--brand); color: #fff; padding: 2px 9px;
+      border-radius: 999px; align-self: flex-start; letter-spacing: 0.02em;
+    }
+    .comic-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .comic-tags span {
+      font-size: 11px; background: #eeeaf9; color: #4b427a;
+      border-radius: 6px; padding: 1px 7px;
+    }
+    .comic-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+    .comic-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11.5px; color: var(--muted); margin-top: auto; padding-top: 6px;
+      border-top: 1px dashed var(--line);
+    }
+    .comic-meta b { color: var(--accent); font-size: 13px; }
+    /* 更新列表 */
+    .update-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+    .update-item {
+      display: flex; gap: 14px; align-items: baseline;
+      padding: 11px 0; border-bottom: 1px dashed var(--line);
+    }
+    .update-item:last-child { border-bottom: none; }
+    .update-time {
+      font-size: 12px; color: var(--muted); flex-shrink: 0; width: 90px;
+      font-variant-numeric: tabular-nums;
+    }
+    .update-title { font-size: 14.5px; font-weight: 600; color: var(--brand-strong); }
+    .update-summary { font-size: 13px; color: var(--ink-soft); }
+    /* 分类入口 */
+    .category-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .category-item {
+      background: #f7f4ee; border: 1px solid var(--line);
+      border-radius: var(--radius-md); padding: 14px 12px; text-align: center;
+      font-size: 14px; font-weight: 600; color: var(--brand-strong);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .category-item:hover, .category-item:focus-visible {
+      background: #efecf6; border-color: var(--brand); outline: none;
+    }
+    .category-item small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+    /* 深度解析 */
+    .deep-article h3 { font-size: 16.5px; margin: 22px 0 8px; color: var(--brand-strong); }
+    .deep-article h3:first-of-type { margin-top: 0; }
+    .deep-article ul { margin: 8px 0 14px; padding-left: 20px; }
+    .deep-article li { margin-bottom: 6px; color: var(--ink-soft); }
+    .deep-article .pull-quote {
+      background: var(--gold-soft); border-left: 4px solid var(--gold);
+      padding: 12px 18px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 14px; color: #5c4a1e; margin: 16px 0;
+    }
+    /* 体验指南步骤 */
+    .step-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+    .step-list li {
+      display: grid; grid-template-columns: 32px 1fr; gap: 12px;
+      align-items: start; counter-increment: step;
+    }
+    .step-list li::before {
+      content: counter(step); display: grid; place-items: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--brand); color: #fff; font-weight: 700; font-size: 14px;
+    }
+    .step-list strong { display: block; font-size: 14.5px; color: var(--brand-strong); margin-bottom: 2px; }
+    .step-list p { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+    /* FAQ */
+    details.faq-item {
+      border-bottom: 1px solid var(--line); padding: 4px 0;
+    }
+    details.faq-item:last-child { border-bottom: none; }
+    details.faq-item summary {
+      font-size: 14.5px; font-weight: 600; color: var(--brand-strong);
+      padding: 12px 0; cursor: pointer; list-style: none;
+      display: flex; justify-content: space-between; gap: 10px;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after {
+      content: "＋"; color: var(--accent); font-size: 17px; line-height: 1;
+      flex-shrink: 0;
+    }
+    details.faq-item[open] summary::after { content: "－"; }
+    details.faq-item .faq-answer {
+      font-size: 13.5px; color: var(--ink-soft); padding: 0 0 14px;
+    }
+    /* 评论 */
+    .comment-list { display: grid; gap: 12px; }
+    .comment-item {
+      background: #fbfaf7; border: 1px solid var(--line);
+      border-radius: var(--radius-md); padding: 12px 16px;
+    }
+    .comment-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; flex-wrap: wrap; gap: 6px; }
+    .comment-user { font-size: 13px; font-weight: 700; color: var(--brand-strong); }
+    .comment-time { font-size: 11.5px; color: var(--muted); }
+    .comment-text { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+    /* 资讯 */
+    .news-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+    .news-item { padding: 14px 0; border-bottom: 1px dashed var(--line); }
+    .news-item:last-child { border-bottom: none; }
+    .news-title { font-size: 15px; font-weight: 600; color: var(--brand-strong); margin: 0 0 3px; }
+    .news-meta { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .news-summary { font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+    /* 推荐标签索引 */
+    .rec-tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .rec-tags a {
+      font-size: 13px; background: #f1eee7; color: var(--ink-soft);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 6px 15px; transition: background 0.15s, color 0.15s;
+    }
+    .rec-tags a:hover, .rec-tags a:focus-visible {
+      background: var(--brand); color: #fff; border-color: var(--brand); outline: none;
+    }
+    /* 榜单（右侧栏） */
+    .rank-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .rank-item { display: flex; gap: 10px; align-items: baseline; font-size: 13.5px; }
+    .rank-num {
+      display: grid; place-items: center; width: 22px; height: 22px;
+      border-radius: 6px; background: #efecf6; color: var(--brand-strong);
+      font-size: 11.5px; font-weight: 700; flex-shrink: 0;
+    }
+    .rank-item:nth-child(1) .rank-num { background: var(--gold); color: #fff; }
+    .rank-item:nth-child(2) .rank-num { background: #c9c4de; color: #fff; }
+    .rank-item:nth-child(3) .rank-num { background: #d8b28a; color: #fff; }
+    .rank-title { font-weight: 600; color: var(--brand-strong); }
+    .rank-meta { font-size: 11.5px; color: var(--muted); }
+    /* 右侧栏面板 */
+    .rail-panel {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius-lg); padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .rail-panel h2 { font-size: 15px; margin: 0 0 12px; color: var(--brand-strong); }
+    .rail-panel h3 { font-size: 13.5px; margin: 14px 0 6px; color: var(--ink-soft); }
+    .rail-panel p { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; line-height: 1.65; }
+    .rail-tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rail-tag-cloud span {
+      font-size: 11.5px; background: #f3f0e9; border-radius: 6px;
+      padding: 3px 9px; color: var(--ink-soft);
+    }
+    /* 页尾 */
+    .site-footer {
+      background: var(--brand-strong); color: #d9d4ec;
+      padding: 46px 0 26px; font-size: 13.5px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 32px; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.14);
+    }
+    .footer-brand { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: 0.04em; }
+    .footer-desc { font-size: 13px; color: #b9b3d4; max-width: 30em; line-height: 1.7; }
+    .footer-col h3 { font-size: 13.5px; color: #fff; margin: 0 0 10px; letter-spacing: 0.05em; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .footer-col a { color: #b9b3d4; font-size: 13px; transition: color 0.15s; }
+    .footer-col a:hover, .footer-col a:focus-visible { color: #fff; outline: none; }
+    .footer-bottom {
+      padding-top: 18px; display: flex; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap; font-size: 12px; color: #9b94bb;
+    }
+    /* 响应式 */
+    @media (max-width: 1120px) {
+      .portal-grid { grid-template-columns: 160px minmax(0,1fr); }
+      .aside-rail { grid-column: 2; position: static; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 22px; padding-block: 38px 32px; }
+      .hero-art { min-height: 190px; }
+      .portal-grid { grid-template-columns: minmax(0,1fr); gap: 24px; }
+      .channel-index { position: static; }
+      .channel-list { display: flex; flex-wrap: wrap; gap: 4px; }
+      .channel-list a { background: #f3f0e9; }
+      .channel-note { display: none; }
+      .aside-rail { grid-column: auto; grid-template-columns: 1fr 1fr; position: static; }
+    }
+    @media (max-width: 740px) {
+      .wrap { width: calc(100% - 28px); }
+      .header-inner { gap: 10px; }
+      .main-nav { order: 3; flex: 1 1 100%; overflow-x: auto; padding-bottom: 4px; }
+      .main-nav a { background: #f3f0e9; }
+      .header-actions { flex: 1 1 100%; margin-left: 0; }
+      .search-box { min-width: 0; width: 100%; }
+      .aside-rail { grid-template-columns: 1fr; }
+      .section { padding: 18px 16px 20px; border-radius: var(--radius-md); }
+      .hero-stat-row { gap: 10px; }
+      .hero-stat { padding: 8px 14px; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .update-item { flex-wrap: wrap; gap: 2px 10px; }
+      .update-time { width: auto; }
+    }
+    @media (max-width: 420px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .section, .channel-index, .rail-panel { scroll-margin-top: var(--sticky-offset); }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 吸顶公告条 -->
+  <div class="notice-bar" role="region" aria-label="站点公告">
+    <div class="wrap">
+      <strong>本周更新</strong>
+      <span>新增《深海异常信号档案》第 12 话 · 《长夜将明》第二季定档 11 月 15 日 · 悬疑分类新增 8 部短篇完结</span>
+    </div>
+  </div>
+
+  <!-- 吸顶页头 -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="漫画在线 首页">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 74 L50 18 L76 74 Z" fill="#f7c948"/>
+            <circle cx="50" cy="60" r="9" fill="#ffffff"/>
+            <path d="M42 60 Q50 52 58 60" stroke="#2f2b5b" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-text">漫画在线</span>
+      </a>
+      <nav class="main-nav" aria-label="主题导航">
+        <a href="#featured">精选连载</a>
+        <a href="#updates">更新动态</a>
+        <a href="#categories">分类入口</a>
+        <a href="#deep-dive">类型解析</a>
+        <a href="#guide">阅读路径</a>
+        <a href="#faq">常见问答</a>
+        <a href="#news">相关资讯</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box" role="search">
+          <label class="visually-hidden" for="comic-search">在页面内查找漫画条目</label>
+          <input id="comic-search" type="search" placeholder="查找连载、类型、条目名…" autocomplete="off">
+          <button type="button" id="search-btn">查找</button>
+        </div>
+      </div>
+    </div>
+    <div class="wrap"><div class="search-feedback" id="search-feedback" aria-live="polite"></div></div>
+  </header>
+
+  <main id="top">
+    <!-- 首屏 -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="hero-kicker">连载 · 完结 · 类型精选</span>
+          <h1 id="hero-heading">漫画在线</h1>
+          <p class="hero-desc">
+            汇集热血少年漫、悬疑推理、古风恋爱与都市奇幻等连载与完结作品，
+            提供具体条目看点、更新动态、分类筛选和类型比较依据，方便读者按兴趣挑选下一部要追的漫画。
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#featured">浏览精选连载</a>
+            <a class="btn-ghost" href="#updates">查看今日更新</a>
+          </div>
+          <div class="hero-stat-row">
+            <div class="hero-stat"><b>36</b>本周更新条目</div>
+            <div class="hero-stat"><b>12</b>在更热门连载</div>
+            <div class="hero-stat"><b>8</b>分类频道</div>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="30" y="30" width="230" height="170" rx="16" fill="#ffffff" stroke="#d9d2e8" stroke-width="2"/>
+            <rect x="50" y="50" width="120" height="10" rx="5" fill="#2f2b5b" opacity="0.8"/>
+            <rect x="50" y="70" width="180" height="6" rx="3" fill="#c9c2de"/>
+            <rect x="50" y="84" width="150" height="6" rx="3" fill="#c9c2de"/>
+            <rect x="50" y="106" width="80" height="66" rx="8" fill="#f7c948"/>
+            <path d="M62 154 L82 128 L102 154 Z" fill="#2f2b5b"/>
+            <circle cx="82" cy="142" r="5" fill="#ffffff"/>
+            <rect x="146" y="106" width="84" height="6" rx="3" fill="#b9b1d1"/>
+            <rect x="146" y="122" width="70" height="6" rx="3" fill="#b9b1d1"/>
+            <rect x="146" y="138" width="76" height="6" rx="3" fill="#b9b1d1"/>
+            <rect x="146" y="154" width="52" height="6" rx="3" fill="#b9b1d1"/>
+            <rect x="200" y="120" width="180" height="130" rx="16" fill="#ffffff" stroke="#d9d2e8" stroke-width="2"/>
+            <rect x="218" y="140" width="100" height="8" rx="4" fill="#d64f1e" opacity="0.8"/>
+            <rect x="218" y="158" width="140" height="5" rx="2.5" fill="#c9c2de"/>
+            <rect x="218" y="170" width="120" height="5" rx="2.5" fill="#c9c2de"/>
+            <rect x="218" y="190" width="60" height="42" rx="6" fill="#efecf6"/>
+            <rect x="288" y="190" width="60" height="42" rx="6" fill="#fdf0e9"/>
+            <circle cx="70" cy="240" r="26" fill="#2f2b5b"/>
+            <path d="M58 244 Q70 228 82 244" stroke="#f7c948" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三栏门户主体 -->
+    <div class="wrap portal-grid">
+
+      <!-- 左频道索引 -->
+      <aside class="channel-index" aria-label="频道索引">
+        <h2>漫画频道</h2>
+        <ul class="channel-list">
+          <li><a href="#categories">热血少年</a></li>
+          <li><a href="#categories">悬疑推理</a></li>
+          <li><a href="#categories">古风恋爱</a></li>
+          <li><a href="#categories">都市奇幻</a></li>
+          <li><a href="#categories">科幻末世</a></li>
+          <li><a href="#categories">搞笑日常</a></li>
+          <li><a href="#categories">治愈短篇</a></li>
+          <li><a href="#categories">完结精选</a></li>
+          <li><a href="#updates">今日更新</a></li>
+          <li><a href="#rank">热度榜单</a></li>
+        </ul>
+        <p class="channel-note">分类与条目均为示例编排，便于按类型浏览。</p>
+      </aside>
+
+      <!-- 中主内容 -->
+      <div class="main-content">
+
+        <!-- 1 主题领域概览 -->
+        <section class="section" id="overview" aria-labelledby="overview-title">
+          <div class="section-head">
+            <div class="section-kicker">领域概览</div>
+            <h2 id="overview-title">漫画在线内容包含哪些方向</h2>
+            <p class="section-sub">从少年热血到悬疑短篇，按题材与连载状态梳理可读内容</p>
+          </div>
+          <p class="overview-lead">
+            当前连载与完结漫画大致可归为几条主线：以成长和战斗为核心的少年热血、强调逻辑推演与线索回收的悬疑推理、以人物关系与时代氛围见长的古风恋爱，以及设定驱动、节奏较快的都市奇幻和科幻末世。
+          </p>
+          <p>
+            在连载方向上，《深海异常信号档案》与《长夜将明》分别代表悬疑和古装权谋两条路线；《拳台之下》延续拳击题材的训练与对抗叙事；《雾都茶话会》则把都市奇幻落在日常场景中。完结作品中，《雨巷邮差》和《第八号观测站》适合想一次读完的读者，前者偏治愈，后者偏硬科幻。
+          </p>
+          <p>
+            选择时可以先看更新频率与单话时长：周更作品适合固定追更，双周更或月更更适合攒卷阅读。短篇合集和单元剧结构的作品，对碎片时间更友好。类型标签之外，画风与叙事节奏也是判断是否继续阅读的重要依据。
+          </p>
+          <div class="overview-tags" aria-label="内容方向标签">
+            <span>少年热血</span><span>悬疑推理</span><span>古风权谋</span><span>都市奇幻</span>
+            <span>科幻短篇</span><span>治愈日常</span><span>单元剧</span><span>周更连载</span>
+          </div>
+        </section>
+
+        <!-- 2 精选内容推荐 -->
+        <section class="section" id="featured" aria-labelledby="featured-title">
+          <div class="section-head">
+            <div class="section-kicker">精选推荐</div>
+            <h2 id="featured-title">值得优先查看的连载与完结条目</h2>
+            <p class="section-sub">按题材与完成度挑选，每部附具体看点与示例热度</p>
+          </div>
+          <div class="card-grid">
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/shenhai-xinhao12/400/300" width="400" height="300" loading="lazy" alt="深海异常信号档案封面：深海探测与信号波形">
+              <div class="comic-card-body">
+                <span class="type-tag">悬疑推理</span>
+                <h3>深海异常信号档案</h3>
+                <div class="comic-tags"><span>深海站</span><span>信号解码</span><span>周更</span></div>
+                <p class="comic-desc">海底观测站收到重复信号，值班员逐层追查来源，线索藏在旧航海日志里。</p>
+                <div class="comic-meta"><span>更新至 12 话</span><b>9.2</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/changye-jiangming08/400/300" width="400" height="300" loading="lazy" alt="长夜将明封面：宫城夜色与灯影">
+              <div class="comic-card-body">
+                <span class="type-tag">古风权谋</span>
+                <h3>长夜将明</h3>
+                <div class="comic-tags"><span>朝堂</span><span>群像</span><span>双周更</span></div>
+                <p class="comic-desc">以一场夜宴为起点，展开多方势力在旧案重审中的立场变化，偏重人物抉择。</p>
+                <div class="comic-meta"><span>第二季定档 11-15</span><b>9.0</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/quantai-zhixia03/400/300" width="400" height="300" loading="lazy" alt="拳台之下封面：拳击台围绳与训练馆">
+              <div class="comic-card-body">
+                <span class="type-tag">热血运动</span>
+                <h3>拳台之下</h3>
+                <div class="comic-tags"><span>拳击</span><span>训练</span><span>周更</span></div>
+                <p class="comic-desc">从陪练视角写职业拳手备战，训练细节多，比赛回合的节奏控制是主要看点。</p>
+                <div class="comic-meta"><span>更新至 31 话</span><b>8.8</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/wudu-chahuihui07/400/300" width="400" height="300" loading="lazy" alt="雾都茶话会封面：城市茶室与雾气">
+              <div class="comic-card-body">
+                <span class="type-tag">都市奇幻</span>
+                <h3>雾都茶话会</h3>
+                <div class="comic-tags"><span>单元剧</span><span>轻奇幻</span><span>半月更</span></div>
+                <p class="comic-desc">茶馆主人每晚接待一位带特殊委托的客人，故事独立但共享同一城市世界观。</p>
+                <div class="comic-meta"><span>更新至 9 话</span><b>8.7</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/yuxiang-youchai05/400/300" width="400" height="300" loading="lazy" alt="雨巷邮差封面：雨天小巷与邮包">
+              <div class="comic-card-body">
+                <span class="type-tag">治愈完结</span>
+                <h3>雨巷邮差</h3>
+                <div class="comic-tags"><span>短篇</span><span>日常</span><span>已完结</span></div>
+                <p class="comic-desc">十二个雨天送信故事，每话围绕一封信展开，适合一次读完的温和叙事。</p>
+                <div class="comic-meta"><span>全 12 话完结</span><b>9.1</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/dibahao-guancezhan11/400/300" width="400" height="300" loading="lazy" alt="第八号观测站封面：观测站与星图">
+              <div class="comic-card-body">
+                <span class="type-tag">科幻末世</span>
+                <h3>第八号观测站</h3>
+                <div class="comic-tags"><span>硬科幻</span><span>封闭空间</span><span>已完结</span></div>
+                <p class="comic-desc">观测站成员在通讯中断后按手册逐项排查，重点在设定自洽与细节推演。</p>
+                <div class="comic-meta"><span>全 20 话完结</span><b>8.9</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/xiaozhen-qitan02/400/300" width="400" height="300" loading="lazy" alt="小镇奇谈封面：小镇街景与旧钟楼">
+              <div class="comic-card-body">
+                <span class="type-tag">悬疑短篇</span>
+                <h3>小镇奇谈</h3>
+                <div class="comic-tags"><span>单元剧</span><span>民俗</span><span>月更</span></div>
+                <p class="comic-desc">以小镇口述传闻为引，每话收束一个独立疑点，适合喜欢短平快悬疑的读者。</p>
+                <div class="comic-meta"><span>更新至 6 话</span><b>8.5</b></div>
+              </div>
+            </article>
+            <article class="comic-card">
+              <img src="https://picsum.photos/seed/xinghai-shudian09/400/300" width="400" height="300" loading="lazy" alt="星海书店封面：书店与星光窗景">
+              <div class="comic-card-body">
+                <span class="type-tag">轻松日常</span>
+                <h3>星海书店</h3>
+                <div class="comic-tags"><span>书店</span><span>群像</span><span>周更</span></div>
+                <p class="comic-desc">旧书店里几位常客的日常互动，节奏舒缓，适合作为长篇连载之间的调节阅读。</p>
+                <div class="comic-meta"><span>更新至 18 话</span><b>8.6</b></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 3 最新更新 / 动态 -->
+        <section class="section" id="updates" aria-labelledby="updates-title">
+          <div class="section-head">
+            <div class="section-kicker">更新动态</div>
+            <h2 id="updates-title">今日与本周连载更新</h2>
+            <p class="section-sub">以 2026 年 11 月 8 日为基准的条目更新记录</p>
+          </div>
+          <ul class="update-list">
+            <li class="update-item"><span class="update-time">今天 10:20</span><span class="update-title">深海异常信号档案</span><span class="update-summary">第 12 话上线，信号源指向废弃三号舱。</span></li>
+            <li class="update-item"><span class="update-time">今天 09:05</span><span class="update-title">拳台之下</span><span class="update-summary">第 31 话更新，备战段落进入实战模拟。</span></li>
+            <li class="update-item"><span class="update-time">昨天 21:40</span><span class="update-title">长夜将明</span><span class="update-summary">第二季预告公开，定档 11 月 15 日。</span></li>
+            <li class="update-item"><span class="update-time">昨天 18:10</span><span class="update-title">雾都茶话会</span><span class="update-summary">第 9 话更新，委托人与旧城区地图有关。</span></li>
+            <li class="update-item"><span class="update-time">11 月 6 日</span><span class="update-title">星海书店</span><span class="update-summary">第 18 话更新，书店常客群像线推进。</span></li>
+            <li class="update-item"><span class="update-time">11 月 5 日</span><span class="update-title">小镇奇谈</span><span class="update-summary">第 6 话更新，钟楼传闻收束为独立单元。</span></li>
+            <li class="update-item"><span class="update-time">11 月 3 日</span><span class="update-title">雨巷邮差</span><span class="update-summary">完结纪念短篇公开，补完邮差早年经历。</span></li>
+            <li class="update-item"><span class="update-time">11 月 2 日</span><span class="update-title">第八号观测站</span><span class="update-summary">官方设定集条目更新，补充观测站设备清单。</span></li>
+            <li class="update-item"><span class="update-time">10 月 30 日</span><span class="update-title">悬疑分类</span><span class="update-summary">新增 8 部短篇完结作品，均在三话内收束主线。</span></li>
+            <li class="update-item"><span class="update-time">10 月 28 日</span><span class="update-title">古风恋爱分类</span><span class="update-summary">新增“先婚后爱”与“朝堂群像”两个子标签。</span></li>
+          </ul>
+        </section>
+
+        <!-- 4 分类入口 -->
+        <section class="section" id="categories" aria-labelledby="categories-title">
+          <div class="section-head">
+            <div class="section-kicker">分类入口</div>
+            <h2 id="categories-title">按题材与状态筛选漫画</h2>
+            <p class="section-sub">八个常用分类，对应读者搜索较多的类型词</p>
+          </div>
+          <div class="category-grid">
+            <a class="category-item" href="#featured">热血少年<small>训练与对抗</small></a>
+            <a class="category-item" href="#featured">悬疑推理<small>线索与推演</small></a>
+            <a class="category-item" href="#featured">古风恋爱<small>人物关系</small></a>
+            <a class="category-item" href="#featured">都市奇幻<small>设定与日常</small></a>
+            <a class="category-item" href="#featured">科幻末世<small>自洽设定</small></a>
+            <a class="category-item" href="#featured">搞笑日常<small>轻松单元</small></a>
+            <a class="category-item" href="#featured">治愈短篇<small>一次读完</small></a>
+            <a class="category-item" href="#featured">完结精选<small>全本可读</small></a>
+          </div>
+        </section>
+
+        <!-- 5 深度解析正文 -->
+        <section class="section deep-article" id="deep-dive" aria-labelledby="deep-title">
+          <div class="section-head">
+            <div class="section-kicker">深度解析</div>
+            <h2 id="deep-title">不同题材漫画的阅读差异与判断依据</h2>
+            <p class="section-sub">从叙事结构、更新节奏和完成度看几类常见漫画</p>
+          </div>
+          <h3>悬疑推理漫画：先看线索密度，再看回收节奏</h3>
+          <p>
+            悬疑类作品的核心差异在于线索给出方式。以《深海异常信号档案》为例，它在每话末尾保留一个可验证的信号细节，让读者能跟角色同步推演；《小镇奇谈》则采用单元剧结构，每话自洽收束，适合不想追长线伏笔的读者。判断这类作品是否适合自己，可以先看前两话是否给出明确的疑点，以及第三话左右是否开始回收。
+          </p>
+          <p>
+            线索密度过高会让阅读变成解谜作业，过低则失去悬疑张力。一个实用的判断方法是：读完后能否用一句话复述本话核心疑点。如果能，说明叙事目标是清楚的。
+          </p>
+          <h3>热血运动漫画：训练细节与比赛节奏缺一不可</h3>
+          <p>
+            《拳台之下》的看点在于训练段落与实战段落的配比。热血运动类作品如果只有比赛没有训练，角色成长会显得突兀；如果训练过长而缺少对抗，节奏又容易拖慢。较成熟的写法通常按“备战—模拟—实战—复盘”循环推进，每卷完成一次完整循环。
+          </p>
+          <ul>
+            <li>看训练内容是否具体：招式、体能、战术至少有一项能被描述清楚。</li>
+            <li>看对手是否有独立动机，而不是单纯为主角制造障碍。</li>
+            <li>看比赛回合是否服务人物关系变化，而不只是比分推进。</li>
+          </ul>
+          <div class="pull-quote">
+            同一类型下，完成度比题材标签更能决定阅读体验：完结作品可以直接看整体结构，连载作品更适合先观察前五话的叙事稳定性。
+          </div>
+          <h3>古风与都市奇幻：世界观信息如何释放</h3>
+          <p>
+            《长夜将明》属于慢热型古风权谋，前几话集中建立人物立场，冲突在第二卷才完全展开；《雾都茶话会》则用单元剧方式逐步释放城市设定，每话只引入一个新规则。两种方式没有高下，但对应不同的阅读预期：想连续追主线选前者，想随时拿起放下选后者。
+          </p>
+          <h3>短篇与完结作品：一次读完的筛选方法</h3>
+          <p>
+            《雨巷邮差》和《第八号观测站》都适合一次读完，但侧重点完全不同。前者以情绪和场景为主，单话之间关联较弱；后者需要读者记住设备与时间线细节，适合连续阅读。挑选完结短篇时，可以先看总话数与单话页数：12 话以内通常适合一个周末读完，20 话以上建议分两到三次。
+          </p>
+          <p>
+            如果对某一类型还不确定，优先选择单元剧结构的作品试读，成本更低，也更容易判断自己是否喜欢该题材的叙事方式。
+          </p>
+        </section>
+
+        <!-- 6 体验指南 / 消费路径 -->
+        <section class="section" id="guide" aria-labelledby="guide-title">
+          <div class="section-head">
+            <div class="section-kicker">阅读路径</div>
+            <h2 id="guide-title">从哪部开始看：按时间与偏好的选择顺序</h2>
+            <p class="section-sub">给第一次接触这些条目的读者一条可执行的阅读顺序</p>
+          </div>
+          <ol class="step-list">
+            <li>
+              <div>
+                <strong>先用短篇确认口味</strong>
+                <p>从《雨巷邮差》或《小镇奇谈》入手，单话独立，半小时可读完一话，能快速判断自己更偏向情绪叙事还是解谜叙事。</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>再选一部周更连载固定追读</strong>
+                <p>如果喜欢推演，选《深海异常信号档案》；如果偏动作节奏，选《拳台之下》。周更作品建议固定同一时间阅读，避免线索遗忘。</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>根据题材偏好扩展</strong>
+                <p>古风权谋看《长夜将明》，都市轻奇幻看《雾都茶话会》。两部都属于慢热型，建议至少读完前三话再决定是否继续。</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>用完结作品做阶段收尾</strong>
+                <p>连载追到一定阶段后，可以挑《第八号观测站》这类完结硬科幻一次读完，减少多线追更带来的记忆负担。</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <!-- 7 FAQ -->
+        <section class="section" id="faq" aria-labelledby="faq-title">
+          <div class="section-head">
+            <div class="section-kicker">常见问答</div>
+            <h2 id="faq-title">关于连载与类型的常见问题</h2>
+            <p class="section-sub">更新频率、类型区别与入门选择</p>
+          </div>
+          <details class="faq-item">
+            <summary>悬疑推理漫画一般多久更新一次？</summary>
+            <div class="faq-answer">周更和双周更较常见。《深海异常信号档案》目前为周更，《小镇奇谈》为月更。更新间隔越长，前情回顾通常越详细，适合不习惯频繁追更的读者。</div>
+          </details>
+          <details class="faq-item">
+            <summary>古风权谋和古风恋爱有什么区别？</summary>
+            <div class="faq-answer">权谋类重心在势力关系与事件推演，人物情感是辅线；恋爱类重心在人物关系推进。像《长夜将明》更接近前者，阅读时需要留意人物立场和旧案线索。</div>
+          </details>
+          <details class="faq-item">
+            <summary>第一次接触这些漫画，从哪部开始比较好？</summary>
+            <div class="faq-answer">建议从单元剧短篇开始，比如《雨巷邮差》或《小镇奇谈》，每话独立，试读成本低。确定偏好后再进入《深海异常信号档案》这类需要连续追读的长线作品。</div>
+          </details>
+          <details class="faq-item">
+            <summary>热血运动漫画的评判标准通常看什么？</summary>
+            <div class="faq-answer">主要看训练细节是否具体、对手是否有独立动机、比赛回合是否推动人物关系。只有比分推进而缺少人物变化的作品，读起来容易重复。</div>
+          </details>
+          <details class="faq-item">
+            <summary>《深海异常信号档案》和《第八号观测站》有什么不同？</summary>
+            <div class="faq-answer">前者是连载悬疑，围绕信号来源逐步展开；后者是完结硬科幻，重点在封闭空间内的设备与时间线推演。前者适合追更，后者适合一次读完。</div>
+          </details>
+          <details class="faq-item">
+            <summary>完结短篇和长篇连载的阅读节奏怎么安排？</summary>
+            <div class="faq-answer">可以把完结短篇作为长篇之间的调节阅读。周更连载建议固定时间阅读，完结短篇适合周末集中读完。两类交替阅读能减少追更疲劳。</div>
+          </details>
+        </section>
+
+        <!-- 8 用户评论 -->
+        <section class="section" id="comments" aria-labelledby="comments-title">
+          <div class="section-head">
+            <div class="section-kicker">读者评论</div>
+            <h2 id="comments-title">关于具体条目的读者反馈</h2>
+            <p class="section-sub">围绕条目内容与类型的讨论摘录</p>
+          </div>
+          <div class="comment-list">
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">夜航船</span><span class="comment-time">今天 11:02</span></div><p class="comment-text">《深海异常信号档案》第 12 话把三号舱的线索接上了，之前担心的伏笔断线问题暂时没有出现。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">纸灯与猫</span><span class="comment-time">今天 09:15</span></div><p class="comment-text">《长夜将明》第二季定档消息确认了，第一季末尾的旧案线希望能继续推进，不要只停在人物关系上。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">拳台边角</span><span class="comment-time">昨天 22:40</span></div><p class="comment-text">《拳台之下》这周的训练段落比上一话扎实，陪练视角确实让比赛以外的东西也能看。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">雾中茶客</span><span class="comment-time">昨天 20:08</span></div><p class="comment-text">《雾都茶话会》第 9 话的旧城区地图是新信息，之前几话只提过地名，这次终于展开了一点。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">雨天邮包</span><span class="comment-time">11 月 6 日</span></div><p class="comment-text">《雨巷邮差》完结短篇补了早年经历，情绪收得比较克制，比正篇更安静。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">星图碎片</span><span class="comment-time">11 月 5 日</span></div><p class="comment-text">《第八号观测站》的设定集条目更新了设备清单，对理解第二卷的排查顺序很有帮助。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">钟楼旧事</span><span class="comment-time">11 月 4 日</span></div><p class="comment-text">《小镇奇谈》第 6 话收得干净，单元剧的好处就是不用担心忘记前情。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">书店常客</span><span class="comment-time">11 月 3 日</span></div><p class="comment-text">《星海书店》节奏偏慢，适合睡前看一话，不适合想找强情节的时候读。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">推理小账本</span><span class="comment-time">11 月 2 日</span></div><p class="comment-text">悬疑分类新增的短篇里，《旧站台留言》前三话收束得不错，线索给得比较直接。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">朝堂散人</span><span class="comment-time">11 月 1 日</span></div><p class="comment-text">古风恋爱新增的子标签把朝堂群像和先婚后爱分开了，找起来比之前清楚。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">轻奇幻收藏夹</span><span class="comment-time">10 月 31 日</span></div><p class="comment-text">《雾都茶话会》的单元剧结构比较友好，但主线推进确实慢，想追大事件的可能要等等。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">热身完毕</span><span class="comment-time">10 月 30 日</span></div><p class="comment-text">《拳台之下》如果能把复盘段落再压一压会更好，现在比赛和训练的比例还在可接受范围。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">短篇优先</span><span class="comment-time">10 月 29 日</span></div><p class="comment-text">最近补了《雨巷邮差》，十二话长度刚好，适合通勤分几次看完。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-user">信号塔下</span><span class="comment-time">10 月 28 日</span></div><p class="comment-text">《深海异常信号档案》前五话信息量偏大，建议连续读，隔太久容易忘记信号编号。</p></div>
+          </div>
+        </section>
+
+        <!-- 9 相关资讯 -->
+        <section class="section" id="news" aria-labelledby="news-title">
+          <div class="section-head">
+            <div class="section-kicker">相关资讯</div>
+            <h2 id="news-title">近期漫画条目与类型动态</h2>
+            <p class="section-sub">新条目上线、分类调整与定档信息</p>
+          </div>
+          <ul class="news-list">
+            <li class="news-item">
+              <p class="news-title">《长夜将明》第二季定档 11 月 15 日</p>
+              <p class="news-meta">2026-11-07</p>
+              <p class="news-summary">官方预告确认第二季首播时间，旧案重审线将继续推进，新增两名朝堂角色。</p>
+            </li>
+            <li class="news-item">
+              <p class="news-title">悬疑分类新增 8 部短篇完结作品</p>
+              <p class="news-meta">2026-11-05</p>
+              <p class="news-summary">新增作品均为三话内收束主线的短篇，涵盖民俗、都市怪谈与封闭空间三类场景。</p>
+            </li>
+            <li class="news-item">
+              <p class="news-title">《深海异常信号档案》第 12 话更新</p>
+              <p class="news-meta">2026-11-08</p>
+              <p class="news-summary">本话将信号源指向废弃三号舱，同时补入观测站人员轮换表，为后续排查提供依据。</p>
+            </li>
+            <li class="news-item">
+              <p class="news-title">古风恋爱分类新增两个子标签</p>
+              <p class="news-meta">2026-10-28</p>
+              <p class="news-summary">新增“先婚后爱”与“朝堂群像”标签，方便区分以关系推进为主和以势力关系为主的作品。</p>
+            </li>
+            <li class="news-item">
+              <p class="news-title">《雨巷邮差》完结纪念短篇公开</p>
+              <p class="news-meta">2026-11-03</p>
+              <p class="news-summary">短篇补完邮差早年经历，正篇十二话仍可独立阅读，短篇作为补充内容发布。</p>
+            </li>
+            <li class="news-item">
+              <p class="news-title">《第八号观测站》设定集条目更新</p>
+              <p class="news-meta">2026-11-02</p>
+              <p class="news-summary">补充观测站设备清单与时间线对照表，对二刷读者理解排查顺序有帮助。</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- 10 相关推荐 -->
+        <section class="section" id="related" aria-labelledby="related-title">
+          <div class="section-head">
+            <div class="section-kicker">延伸方向</div>
+            <h2 id="related-title">按类型与阅读需求延伸的条目索引</h2>
+            <p class="section-sub">与热门推荐角度不同，这里更偏向方向与子类型</p>
+          </div>
+          <div class="rec-tags">
+            <a href="#featured">封闭空间悬疑</a>
+            <a href="#featured">民俗怪谈短篇</a>
+            <a href="#featured">拳击训练日常</a>
+            <a href="#featured">朝堂群像权谋</a>
+            <a href="#featured">书店治愈群像</a>
+            <a href="#featured">硬科幻设定流</a>
+            <a href="#featured">单元剧轻奇幻</a>
+            <a href="#featured">完结一次读完</a>
+          </div>
+        </section>
+
+        <!-- 11 补充板块：条目时间线与可信度分层 -->
+        <section class="section" id="timeline" aria-labelledby="timeline-title">
+          <div class="section-head">
+            <div class="section-kicker">补充参考</div>
+            <h2 id="timeline-title">近期条目时间线与信息参考分层</h2>
+            <p class="section-sub">按日期梳理条目动态，并区分不同信息类型</p>
+          </div>
+          <h3 style="font-size:15px;margin:0 0 10px;color:var(--brand-strong);">条目时间线</h3>
+          <ul class="update-list" style="margin-bottom:22px;">
+            <li class="update-item"><span class="update-time">11 月 8 日</span><span class="update-title">深海异常信号档案</span><span class="update-summary">第 12 话上线，三号舱线索展开。</span></li>
+            <li class="update-item"><span class="update-time">11 月 7 日</span><span class="update-title">长夜将明</span><span class="update-summary">第二季定档预告公开。</span></li>
+            <li class="update-item"><span class="update-time">11 月 5 日</span><span class="update-title">小镇奇谈</span><span class="update-summary">第 6 话更新，钟楼单元收束。</span></li>
+            <li class="update-item"><span class="update-time">11 月 3 日</span><span class="update-title">雨巷邮差</span><span class="update-summary">完结纪念短篇公开。</span></li>
+            <li class="update-item"><span class="update-time">10 月 30 日</span><span class="update-title">悬疑分类</span><span class="update-summary">短篇完结作品批量新增。</span></li>
+          </ul>
+          <h3 style="font-size:15px;margin:0 0 10px;color:var(--brand-strong);">信息参考分层</h3>
+          <ul style="margin:0 0 0 18px;padding:0;font-size:13.5px;color:var(--ink-soft);display:grid;gap:6px;">
+            <li><strong>条目事实</strong>：条目名称、话数、更新日期与分类归属。</li>
+            <li><strong>阅读判断</strong>：叙事节奏、线索密度、训练与比赛配比等主观维度。</li>
+            <li><strong>热度与评分</strong>：本页示例数值，用于横向比较条目关注度，不代表官方数据。</li>
+          </ul>
+        </section>
+
+      </div><!-- /.main-content -->
+
+      <!-- 右侧辅助栏 -->
+      <aside class="aside-rail" aria-label="辅助信息">
+        <div class="rail-panel" id="rank">
+          <h2>本周热度榜</h2>
+          <ol class="rank-list">
+            <li class="rank-item"><span class="rank-num">1</span><div><div class="rank-title">深海异常信号档案</div><div class="rank-meta">悬疑 · 更新至 12 话</div></div></li>
+            <li class="rank-item"><span class="rank-num">2</span><div><div class="rank-title">长夜将明</div><div class="rank-meta">古风权谋 · 第二季定档</div></div></li>
+            <li class="rank-item"><span class="rank-num">3</span><div><div class="rank-title">拳台之下</div><div class="rank-meta">热血运动 · 更新至 31 话</div></div></li>
+            <li class="rank-item"><span class="rank-num">4</span><div><div class="rank-title">雨巷邮差</div><div class="rank-meta">治愈完结 · 全 12 话</div></div></li>
+            <li class="rank-item"><span class="rank-num">5</span><div><div class="rank-title">雾都茶话会</div><div class="rank-meta">都市奇幻 · 更新至 9 话</div></div></li>
+            <li class="rank-item"><span class="rank-num">6</span><div><div class="rank-title">第八号观测站</div><div class="rank-meta">科幻完结 · 全 20 话</div></div></li>
+            <li class="rank-item"><span class="rank-num">7</span><div><div class="rank-title">小镇奇谈</div><div class="rank-meta">悬疑短篇 · 更新至 6 话</div></div></li>
+          </ol>
+        </div>
+        <div class="rail-panel">
+          <h2>阅读提示</h2>
+          <p>周更作品建议固定阅读时间，双周更与月更适合攒两到三话再读。单元剧结构作品可以从任意话进入。</p>
+          <h3>常用子类型</h3>
+          <div class="rail-tag-cloud">
+            <span>封闭空间</span><span>民俗怪谈</span><span>拳击训练</span><span>朝堂群像</span>
+            <span>书店群像</span><span>硬科幻设定</span><span>轻奇幻单元</span><span>完结短篇</span>
+          </div>
+        </div>
+      </aside>
+
+    </div><!-- /.portal-grid -->
+  </main>
+
+  <!-- 页尾 -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">漫画在线</div>
+          <p class="footer-desc">汇集热血少年、悬疑推理、古风恋爱、都市奇幻等连载与完结漫画，提供具体条目推荐、更新动态与类型比较参考。</p>
+        </div>
+        <div class="footer-col">
+          <h3>浏览入口</h3>
+          <ul>
+            <li><a href="#featured">精选连载</a></li>
+            <li><a href="#updates">更新动态</a></li>
+            <li><a href="#categories">分类入口</a></li>
+            <li><a href="#rank">热度榜单</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>类型方向</h3>
+          <ul>
+            <li><a href="#featured">悬疑推理短篇</a></li>
+            <li><a href="#featured">古风权谋群像</a></li>
+            <li><a href="#featured">热血运动训练</a></li>
+            <li><a href="#featured">完结科幻设定</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>参考信息</h3>
+          <ul>
+            <li><a href="#deep-dive">类型解析</a></li>
+            <li><a href="#guide">阅读路径</a></li>
+            <li><a href="#faq">常见问答</a></li>
+            <li><a href="#news">相关资讯</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 漫画在线 · 内容聚合示例页</span>
+        <span>部分内容为示例数据，仅用于展示页面结构</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var input = document.getElementById('comic-search');
+      var btn = document.getElementById('search-btn');
+      var feedback = document.getElementById('search-feedback');
+      var searchable = Array.prototype.slice.call(
+        document.querySelectorAll('.comic-card, .update-item, .news-item, .faq-item, .comment-item')
+      );
+
+      function runSearch() {
+        var q = (input.value || '').trim().toLowerCase();
+        if (!q) {
+          searchable.forEach(function (el) { el.style.display = ''; });
+          feedback.textContent = '';
+          return;
+        }
+        var hits = 0;
+        searchable.forEach(function (el) {
+          var text = (el.textContent || '').toLowerCase();
+          var match = text.indexOf(q) !== -1;
+          el.style.display = match ? '' : 'none';
+          if (match) hits++;
+        });
+        feedback.textContent = hits > 0
+          ? '找到 ' + hits + ' 条与“' + input.value.trim() + '”相关的内容。'
+          : '未找到匹配内容，可尝试“悬疑”“拳击”“完结”等关键词。';
+      }
+
+      btn.addEventListener('click', runSearch);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); runSearch(); }
+      });
+      input.addEventListener('input', function () {
+        if (input.value.trim() === '') {
+          searchable.forEach(function (el) { el.style.display = ''; });
+          feedback.textContent = '';
+        }
+      });
+    })();
+  </script>
+</body>
+                </html>
